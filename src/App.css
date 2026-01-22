@@ -1,0 +1,771 @@
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Menu,
+  X,
+  ArrowRight,
+  ArrowDown,
+  Calendar,
+  Clock,
+  MapPin,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
+import logo from "./assets/logo.jpeg";
+import herologo from "./assets/hero-logo.png";
+import event1 from "./assets/event1.jpeg"
+import event2 from "./assets/event2.jpeg"
+ 
+
+/* -----------------------
+   Helpers
+------------------------ */
+const rand = (min, max) => Math.random() * (max - min) + min;
+const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+
+function buildAcrossBolt() {
+  // Crack across mid area
+  let x = rand(0, 10);
+  let y = rand(35, 55);
+  const points = [[x, y]];
+
+  const segments = Math.floor(rand(9, 14));
+  for (let i = 0; i < segments; i++) {
+    x = clamp(x + rand(8, 15), 0, 100);
+    y = clamp(y + rand(-11, 11), 10, 90);
+    points.push([x, y]);
+    if (x > 98) break;
+  }
+
+  const toD = (pts) =>
+    pts
+      .map((p, idx) =>
+        idx === 0
+          ? `M ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
+          : `L ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
+      )
+      .join(" ");
+
+  const main = toD(points);
+
+  // branches
+  const branches = [];
+  if (Math.random() < 0.85 && points.length > 6) {
+    const branchCount = Math.floor(rand(1, 3));
+    for (let b = 0; b < branchCount; b++) {
+      const startIndex = Math.floor(rand(2, points.length - 3));
+      let [bx, by] = points[startIndex];
+      const bPts = [[bx, by]];
+      const bSeg = Math.floor(rand(3, 6));
+      for (let j = 0; j < bSeg; j++) {
+        bx = clamp(bx + rand(-14, 14), 0, 100);
+        by = clamp(by + rand(-10, 14), 0, 100);
+        bPts.push([bx, by]);
+      }
+      branches.push(toD(bPts));
+    }
+  }
+
+  return { main, branches };
+}
+
+function generateStrikeBolts() {
+  const bolts = [];
+  bolts.push({ ...buildAcrossBolt(), width: rand(3.0, 4.8) });
+  if (Math.random() < 0.55) bolts.push({ ...buildAcrossBolt(), width: rand(2.0, 3.6) });
+  return bolts;
+}
+
+/* -----------------------
+   Procedural Cloud + Thunder Background (NO IMAGE)
+------------------------ */
+function CloudThunderBackground({ onStrike }) {
+  // cloud blobs: 3 layers for depth
+  const cloudsBack = useMemo(
+    () =>
+      Array.from({ length: 14 }, (_, i) => ({
+        id: `b-${i}`,
+        left: rand(-10, 100),
+        top: rand(-10, 70),
+        w: rand(260, 520),
+        h: rand(180, 360),
+        blur: rand(60, 100),
+        opacity: rand(0.20, 0.36),
+        anim: rand(18, 34),
+        delay: rand(0, 6),
+      })),
+    []
+  );
+
+  const cloudsMid = useMemo(
+    () =>
+      Array.from({ length: 16 }, (_, i) => ({
+        id: `m-${i}`,
+        left: rand(-15, 100),
+        top: rand(-15, 80),
+        w: rand(260, 620),
+        h: rand(200, 420),
+        blur: rand(45, 80),
+        opacity: rand(0.22, 0.42),
+        anim: rand(14, 28),
+        delay: rand(0, 6),
+      })),
+    []
+  );
+
+  const cloudsFront = useMemo(
+    () =>
+      Array.from({ length: 12 }, (_, i) => ({
+        id: `f-${i}`,
+        left: rand(-20, 100),
+        top: rand(-5, 90),
+        w: rand(280, 720),
+        h: rand(220, 460),
+        blur: rand(38, 65),
+        opacity: rand(0.18, 0.33),
+        anim: rand(12, 22),
+        delay: rand(0, 6),
+      })),
+    []
+  );
+
+  // strike state
+  const [strike, setStrike] = useState({ id: 0, bolts: [] });
+  const timersRef = useRef([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const clearAll = () => {
+      timersRef.current.forEach((t) => clearTimeout(t));
+      timersRef.current = [];
+    };
+
+    const schedule = () => {
+      const delay = Math.floor(rand(2600, 8600)); // strikes sometimes
+      const t = setTimeout(() => {
+        if (cancelled) return;
+
+        setStrike((prev) => ({
+          id: prev.id + 1,
+          bolts: generateStrikeBolts(),
+        }));
+
+        onStrike?.();
+
+        schedule();
+      }, delay);
+
+      timersRef.current.push(t);
+    };
+
+    schedule();
+    return () => {
+      cancelled = true;
+      clearAll();
+    };
+  }, [onStrike]);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Base */}
+      <div className="absolute inset-0 bg-black" />
+
+      {/* Base depth gradients */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.05),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_70%,rgba(255,255,255,0.04),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_60%,rgba(255,255,255,0.03),transparent_55%)]" />
+
+      {/* Back clouds */}
+      <div className="absolute inset-0 cloud-layer cloud-layer-back">
+        {cloudsBack.map((c) => (
+          <div
+            key={c.id}
+            className="cloud-blob"
+            style={{
+              left: `${c.left}%`,
+              top: `${c.top}%`,
+              width: `${c.w}px`,
+              height: `${c.h}px`,
+              opacity: c.opacity,
+              filter: `blur(${c.blur}px)`,
+              animationDuration: `${c.anim}s`,
+              animationDelay: `${c.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Mid clouds */}
+      <div className="absolute inset-0 cloud-layer cloud-layer-mid">
+        {cloudsMid.map((c) => (
+          <div
+            key={c.id}
+            className="cloud-blob"
+            style={{
+              left: `${c.left}%`,
+              top: `${c.top}%`,
+              width: `${c.w}px`,
+              height: `${c.h}px`,
+              opacity: c.opacity,
+              filter: `blur(${c.blur}px)`,
+              animationDuration: `${c.anim}s`,
+              animationDelay: `${c.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Front clouds */}
+      <div className="absolute inset-0 cloud-layer cloud-layer-front">
+        {cloudsFront.map((c) => (
+          <div
+            key={c.id}
+            className="cloud-blob"
+            style={{
+              left: `${c.left}%`,
+              top: `${c.top}%`,
+              width: `${c.w}px`,
+              height: `${c.h}px`,
+              opacity: c.opacity,
+              filter: `blur(${c.blur}px)`,
+              animationDuration: `${c.anim}s`,
+              animationDelay: `${c.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Gold flash overlay ONLY during strike */}
+      <div key={`flash-${strike.id}`} className="absolute inset-0 strike-flash" />
+
+      {/* Lightning cracks overlay ONLY during strike */}
+      <svg
+        key={`bolt-${strike.id}`}
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient id="goldBolt" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#FFF6CC" />
+            <stop offset="0.35" stopColor="#FCD34D" />
+            <stop offset="0.6" stopColor="#FBBF24" />
+            <stop offset="1" stopColor="#D97706" />
+          </linearGradient>
+        </defs>
+
+        {strike.bolts.map((b, idx) => (
+          <g key={`${strike.id}-${idx}`}>
+            <path
+              d={b.main}
+              className="strike-bolt"
+              style={{ strokeWidth: b.width, animationDelay: `${idx * 70}ms` }}
+              stroke="url(#goldBolt)"
+              vectorEffect="non-scaling-stroke"
+            />
+            {b.branches.map((bd, j) => (
+              <path
+                key={`${strike.id}-${idx}-br-${j}`}
+                d={bd}
+                className="strike-branch"
+                style={{ animationDelay: `${idx * 70 + 90}ms` }}
+                stroke="url(#goldBolt)"
+                vectorEffect="non-scaling-stroke"
+              />
+            ))}
+          </g>
+        ))}
+      </svg>
+
+      {/* Subtle gold vignette (always) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.06),transparent_62%)]" />
+    </div>
+  );
+}
+
+/* -----------------------
+   Carousel (glimpse next)
+------------------------ */
+function PosterCarousel({ images = [] }) {
+  const scrollerRef = useRef(null);
+
+  const scrollByCard = (dir) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 360, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => scrollByCard(-1)}
+        className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full border border-yellow-600/30 bg-black/40 backdrop-blur-md text-yellow-400 hover:bg-yellow-500/10 transition"
+        aria-label="Scroll left"
+      >
+        <ChevronLeft size={18} />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => scrollByCard(1)}
+        className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full border border-yellow-600/30 bg-black/40 backdrop-blur-md text-yellow-400 hover:bg-yellow-500/10 transition"
+        aria-label="Scroll right"
+      >
+        <ChevronRight size={18} />
+      </button>
+
+      <div ref={scrollerRef} className="no-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory">
+        <div className="flex gap-6 pr-[120px]">
+          {images.map((src, i) => (
+            <div
+              key={i}
+              className="snap-start shrink-0 w-[260px] sm:w-[320px] md:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden border border-yellow-600/20 bg-black relative"
+            >
+              <div className="absolute inset-0 flex items-center justify-center text-yellow-400/45 font-semibold">
+                Highlight Poster
+              </div>
+              <img
+                src={src}
+                alt={`carousel-${i}`}
+                className="relative z-10 w-full h-full object-cover"
+                onError={(e) => (e.currentTarget.style.display = "none")}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -----------------------
+   Main
+------------------------ */
+export default function EHorizon() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [navCompact, setNavCompact] = useState(false);
+
+  const [strikeGlow, setStrikeGlow] = useState(false);
+  const strikeTimerRef = useRef(null);
+
+  const handleStrike = useCallback(() => {
+    setStrikeGlow(true);
+    if (strikeTimerRef.current) clearTimeout(strikeTimerRef.current);
+    strikeTimerRef.current = setTimeout(() => setStrikeGlow(false), 900);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (strikeTimerRef.current) clearTimeout(strikeTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setNavCompact(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const pitchEvent = {
+    title: "PITCH COMPETITION",
+    description: "The ultimate startup showcase and innovation challenge",
+    date: "February 23 to 27, 2026",
+    time: "Full Day Event",
+    venue: "Maharaja Auditorium",
+    image: "/assets/pitch/pitch-poster.jpg",
+  };
+
+  const events = [
+    { image: event1 },
+    { image: event2 },
+    { image: "/assets/events/ai-workshop.jpg" },
+    { image: "/assets/events/blockchain.jpg" },
+    { image: "/assets/events/data-science.jpg" },
+    { image: "/assets/events/cloud.jpg" },
+    { image: "/assets/events/mobile.jpg" },
+    { image: "/assets/events/cyber.jpg" },
+    { image: "/assets/events/uiux.jpg" },
+  ];
+
+  const highlightCarousel = [
+    "/assets/highlights/h1.jpg",
+    "/assets/highlights/h2.jpg",
+    "/assets/highlights/h3.jpg",
+    "/assets/highlights/last-event.jpg",
+  ];
+
+  const [visibleCards, setVisibleCards] = useState(() => new Set());
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const els = cardRefs.current.filter(Boolean);
+    if (!els.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const idx = Number(entry.target.dataset.index);
+          setVisibleCards((prev) => {
+            const next = new Set(prev);
+            next.add(idx);
+            return next;
+          });
+          obs.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [events.length]);
+
+  return (
+    <>
+      <style>{`
+        /* --- cloud blobs --- */
+        .cloud-blob{
+          position:absolute;
+          border-radius:9999px;
+          background:
+            radial-gradient(circle at 30% 35%, rgba(255,255,255,0.06), rgba(0,0,0,0) 60%),
+            radial-gradient(circle at 60% 55%, rgba(255,255,255,0.045), rgba(0,0,0,0) 62%),
+            radial-gradient(circle at 50% 50%, rgba(30,30,30,0.70), rgba(0,0,0,0) 66%);
+          animation: cloudFloat 20s ease-in-out infinite alternate;
+        }
+
+        .cloud-layer{
+          transform: translateZ(0);
+        }
+
+        .cloud-layer-back .cloud-blob{
+          animation-name: cloudFloatSlow;
+        }
+
+        .cloud-layer-mid .cloud-blob{
+          animation-name: cloudFloat;
+        }
+
+        .cloud-layer-front .cloud-blob{
+          animation-name: cloudFloatFast;
+        }
+
+        @keyframes cloudFloatSlow{
+          0%   { transform: translate3d(-10px, -6px, 0) scale(1.10); }
+          100% { transform: translate3d( 14px,  8px, 0) scale(1.12); }
+        }
+        @keyframes cloudFloat{
+          0%   { transform: translate3d(-14px,  10px, 0) scale(1.12); }
+          100% { transform: translate3d( 18px, -10px, 0) scale(1.14); }
+        }
+        @keyframes cloudFloatFast{
+          0%   { transform: translate3d(-18px,  14px, 0) scale(1.12); }
+          100% { transform: translate3d( 22px, -12px, 0) scale(1.16); }
+        }
+
+        /* --- strike flash (only sometimes) --- */
+        @keyframes strikeFlash {
+          0%   { opacity: 0; }
+          10%  { opacity: 0.22; }
+          20%  { opacity: 0.05; }
+          35%  { opacity: 0.14; }
+          60%  { opacity: 0.03; }
+          100% { opacity: 0; }
+        }
+        .strike-flash{
+          background: radial-gradient(circle at 50% 45%, rgba(251,191,36,0.24), transparent 60%);
+          mix-blend-mode: screen;
+          animation: strikeFlash 900ms ease-out both;
+        }
+
+        /* --- bolt draw --- */
+        @keyframes boltDraw {
+          0%   { opacity: 0; stroke-dashoffset: 140; }
+          12%  { opacity: 1; stroke-dashoffset: 0; }
+          22%  { opacity: 0.35; }
+          34%  { opacity: 1; }
+          60%  { opacity: 0; }
+          100% { opacity: 0; }
+        }
+
+        .strike-bolt{
+          fill:none;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 140;
+          stroke-dashoffset: 140;
+          filter:
+            drop-shadow(0 0 12px rgba(251,191,36,0.70))
+            drop-shadow(0 0 30px rgba(251,191,36,0.22));
+          animation: boltDraw 900ms ease-out both;
+        }
+
+        .strike-branch{
+          fill:none;
+          stroke-width: 2.2;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 100;
+          stroke-dashoffset: 100;
+          filter: drop-shadow(0 0 10px rgba(251,191,36,0.55));
+          animation: boltDraw 820ms ease-out both;
+        }
+
+        /* Hero logo always lite glow */
+        .hero-lite-glow{
+          filter: drop-shadow(0 0 18px rgba(251,191,36,0.16));
+        }
+
+        /* Stronger glow on strike only */
+        @keyframes heroStrike {
+          0%   { filter: drop-shadow(0 0 18px rgba(251,191,36,0.16)); }
+          25%  { filter: drop-shadow(0 0 90px rgba(251,191,36,0.62)); }
+          55%  { filter: drop-shadow(0 0 40px rgba(251,191,36,0.32)); }
+          100% { filter: drop-shadow(0 0 18px rgba(251,191,36,0.16)); }
+        }
+        .hero-strike-glow{ animation: heroStrike 900ms ease-out both; }
+
+        /* Hide scrollbars */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
+
+      <div className="bg-black text-white min-h-screen overflow-x-hidden">
+        {/* NAVBAR (big -> compact pill centered) */}
+        <nav className="fixed top-0 w-full z-50">
+          {!navCompact && (
+            <div className="max-w-7xl mx-auto px-6 pt-6">
+              <div className="flex items-center justify-between">
+                <img src={logo} alt="logo" className="h-12 w-auto" />
+
+                <div className="hidden md:flex items-center gap-3">
+                  <button
+                    onClick={() => scrollToSection("home")}
+                    className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-white/85 hover:text-yellow-300 hover:bg-white/15 transition"
+                  >
+                    About Us
+                  </button>
+                  <button
+                    onClick={() => scrollToSection("events")}
+                    className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-white/85 hover:text-yellow-300 hover:bg-white/15 transition"
+                  >
+                    Event Agenda
+                  </button>
+                  <button
+                    onClick={() => scrollToSection("contact")}
+                    className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-white/85 hover:text-yellow-300 hover:bg-white/15 transition"
+                  >
+                    Contact Us
+                  </button>
+
+                  <button
+                    onClick={() => scrollToSection("pitch")}
+                    className="ml-2 flex items-center gap-3 px-4 py-2 rounded-full bg-white text-black font-semibold border border-white/60 hover:shadow-[0_0_25px_rgba(255,255,255,0.18)] transition"
+                  >
+                    Register Now!
+                    <span className="w-9 h-9 rounded-full bg-black/90 text-white flex items-center justify-center">
+                      <ArrowRight size={18} />
+                    </span>
+                  </button>
+                </div>
+
+                <button
+                  className="md:hidden text-yellow-400"
+                  onClick={() => setMenuOpen((s) => !s)}
+                  aria-label="Menu"
+                >
+                  {menuOpen ? <X /> : <Menu />}
+                </button>
+              </div>
+
+              {menuOpen && (
+                <div className="md:hidden mt-4 rounded-2xl border border-yellow-600/20 bg-black/45 backdrop-blur-xl px-5 py-4 space-y-3">
+                  <button onClick={() => (setMenuOpen(false), scrollToSection("home"))} className="block w-full text-left text-white/80 hover:text-yellow-400">
+                    About Us
+                  </button>
+                  <button onClick={() => (setMenuOpen(false), scrollToSection("events"))} className="block w-full text-left text-white/80 hover:text-yellow-400">
+                    Event Agenda
+                  </button>
+                  <button onClick={() => (setMenuOpen(false), scrollToSection("contact"))} className="block w-full text-left text-white/80 hover:text-yellow-400">
+                    Contact Us
+                  </button>
+                  <button onClick={() => (setMenuOpen(false), scrollToSection("pitch"))} className="block w-full text-left text-yellow-300">
+                    Register Now!
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {navCompact && (
+            <div className="w-full flex justify-center pt-4 px-4">
+              <div className="flex items-center gap-4 rounded-full border border-white/15 bg-black/35 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.55)] px-4 py-2">
+                <img src={herologo} alt="logo" className="h-9 w-auto opacity-90" />
+                <div className="h-6 w-px bg-white/15" />
+                
+
+                <button
+                  onClick={() => scrollToSection("pitch")}
+                  className="ml-1 flex items-center gap-3 px-4 py-2 rounded-full bg-white text-black font-semibold border border-white/60"
+                >
+                  Register Now!
+                  <span className="w-9 h-9 rounded-full bg-black/90 text-white flex items-center justify-center">
+                    <ArrowRight size={18} />
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
+        </nav>
+
+        {/* HERO */}
+        <section id="home" className="relative min-h-screen pt-28 flex items-center justify-center">
+          <CloudThunderBackground onStrike={handleStrike} />
+
+          <div className="relative z-10 flex flex-col items-center text-center px-6">
+            <img
+              src={herologo}
+              alt="E-Horyzon"
+              className={[
+                "w-[420px] sm:w-[560px] md:w-[780px] lg:w-[980px] xl:w-[1100px] max-w-[94vw] h-auto object-contain",
+                "hero-lite-glow",
+                strikeGlow ? "hero-strike-glow" : "",
+              ].join(" ")}
+            />
+
+            <div className="mt-10 flex flex-col md:flex-row gap-10 text-white/85 text-lg">
+              <div className="flex items-center gap-3">
+                <Calendar className="text-yellow-400" />
+                February 23 – 27, 2026
+              </div>
+              <div className="flex items-center gap-3">
+                <MapPin className="text-yellow-400" />
+                Kongu Engineering College, Erode
+              </div>
+            </div>
+
+            <button
+              onClick={() => scrollToSection("pitch")}
+              className="mt-12 w-12 h-12 rounded-full border border-yellow-600/30 bg-black/30 backdrop-blur-md flex items-center justify-center text-yellow-400 hover:bg-yellow-500/10 transition animate-bounce"
+              aria-label="Scroll down"
+            >
+              <ArrowDown size={26} />
+            </button>
+          </div>
+        </section>
+
+        {/* PITCH */}
+        <section id="pitch" className="py-20 px-6">
+          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-5xl font-black mb-6 text-yellow-400">
+                {pitchEvent.title}
+              </h2>
+              <p className="text-white/70 mb-8">{pitchEvent.description}</p>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex gap-3">
+                  <Calendar className="text-yellow-400" /> {pitchEvent.date}
+                </div>
+                <div className="flex gap-3">
+                  <Clock className="text-yellow-400" /> {pitchEvent.time}
+                </div>
+                <div className="flex gap-3">
+                  <MapPin className="text-yellow-400" /> {pitchEvent.venue}
+                </div>
+              </div>
+
+              <button className="px-8 py-4 bg-yellow-400 text-black rounded-full font-bold flex items-center gap-2 hover:shadow-[0_0_30px_rgba(251,191,36,0.25)] transition">
+                Register Now <ArrowRight />
+              </button>
+            </div>
+
+            <div className="relative h-[420px] border-2 border-dashed border-yellow-600/40 rounded-2xl overflow-hidden bg-yellow-500/5 flex items-center justify-center text-yellow-400/60">
+              Pitch Image Here
+              <img
+                src={pitchEvent.image}
+                alt="Pitch poster"
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => (e.currentTarget.style.display = "none")}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* EVENTS */}
+        <section id="events" className="py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-black mb-4 text-center">
+              <span className="text-white">Event </span>
+              <span className="text-yellow-400">Posters</span>
+            </h2>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
+              {events.map((e, i) => {
+                const isVisible = visibleCards.has(i);
+
+                return (
+                  <div
+                    key={i}
+                    ref={(el) => (cardRefs.current[i] = el)}
+                    data-index={i}
+                    className={[
+                      "relative aspect-[3/4] rounded-2xl overflow-hidden border bg-black",
+                      "border-yellow-600/20",
+                      "transition-all duration-700 ease-out will-change-transform",
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
+                    ].join(" ")}
+                    style={{ transitionDelay: `${Math.min(i, 6) * 90}ms` }}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center text-yellow-400/45 font-semibold">
+                      Poster Coming Soon
+                    </div>
+
+                    <img
+                      src={e.image}
+                      alt="event"
+                      className="relative z-10 w-full h-full object-cover"
+                      onError={(ev) => (ev.currentTarget.style.display = "none")}
+                    />
+                     
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-16">
+              <div className="flex items-end justify-between mb-6">
+                <h3 className="text-2xl md:text-3xl font-black text-white">
+                  Highlights Carousel
+                </h3>
+                <span className="text-white/50 text-sm">(Next poster peeks)</span>
+              </div>
+
+              <PosterCarousel images={highlightCarousel} />
+            </div>
+          </div>
+        </section>
+
+        {/* CONTACT */}
+        <section id="contact" className="py-16 px-6 border-t border-yellow-600/20">
+          <div className="max-w-7xl mx-auto text-center text-white/60">
+            <p className="text-white/80 font-semibold mb-2">Contact Us</p>
+            <p>Institute of Innovation • E-Horyzon 2K26</p>
+          </div>
+        </section>
+
+        <footer className="py-10 text-center text-white/45">
+          E-Horyzon 2K26 • Black & Gold Theme
+        </footer>
+      </div>
+    </>
+  );
+}
