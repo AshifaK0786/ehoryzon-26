@@ -24,6 +24,7 @@ import iic from "../assets/IIC_Logo_Transparent.png"
 import events from "../data/events";
 import { intraeventList, interEventList, workshopList, performingArtsList } from "../data/events";
 import EventCountdownPortal from "../components/EventCountdownPortal";
+import GuestRevealCountdown from "../components/GuestRevealCountdown";
 
 // ✅ your hero video (change path/name)
 import heroVideo from "../assets/hero.mp4";
@@ -470,7 +471,7 @@ export default function EHorizon() {
   const pitchEvent = {
     title: "PITCH FOR TOMORROW",
     description: "The ultimate startup showcase and innovation challenge",
-    date: "February 23 to 27, 2026",
+    date: "March 2 to 6, 2026",
     time: "Full Day Event",
     venue: "Maharaja Auditorium",
     image: "/assets/pitch/pitch-poster.jpg",
@@ -653,6 +654,13 @@ useEffect(() => {
                     About Us
                   </button>
 
+                  <button
+                    onClick={() => navigate("/schedule")}
+                    className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-white/85 hover:text-yellow-300 hover:bg-white/15 transition"
+                  >
+                    Schedule
+                  </button>
+
                   {/* ✅ Event Agenda route -> Events section */}
                   <button
                     onClick={() => scrollToSection("events")}
@@ -690,6 +698,12 @@ useEffect(() => {
                     About Us
                   </button>
                   <button
+                    onClick={() => (setMenuOpen(false), navigate("/schedule"))}
+                    className="block w-full text-left text-white/80 hover:text-yellow-400"
+                  >
+                    Schedule
+                  </button>
+                  <button
                     onClick={() => (setMenuOpen(false), scrollToSection("events"))}
                     className="block w-full text-left text-white/80 hover:text-yellow-400"
                   >
@@ -708,8 +722,10 @@ useEffect(() => {
 
           {navCompact && (
             <div className="w-full flex justify-center pt-4 px-4">
-              <div className="flex items-center gap-4 rounded-full border border-white/15 bg-black/35 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.55)] px-4 py-2">
+              <div className="flex items-center gap-24 rounded-full border border-white/15 bg-black/35 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.55)] px-20 py-2">
                 <img src={herologo} alt="E-Horyzon" className="h-9 w-auto opacity-90" />
+                <img src={iic} alt="IIC" className="h-9 w-auto opacity-90" />
+                <img src={emdc} alt="EMDC" className="h-9 w-auto opacity-90" />
 
                 <button
                   onClick={() => navigate("/register/pitch")}
@@ -767,7 +783,7 @@ useEffect(() => {
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 text-white/90">
               <div className="flex items-center gap-3">
                 <Calendar className="text-yellow-400" />
-                February 23 – 27, 2026
+                March 2-6, 2026
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="text-yellow-400" />
@@ -813,7 +829,7 @@ useEffect(() => {
 
                 <div className="p-8 md:p-10">
                   <div className="inline-flex items-center gap-2 rounded-full border border-yellow-600/30 bg-yellow-500/10 px-4 py-2 text-yellow-300 font-semibold">
-                    Inter College Event
+                    Flagship Event
                   </div>
 
                   <h3 className="mt-5 text-4xl md:text-5xl font-black text-yellow-400">
@@ -851,7 +867,7 @@ useEffect(() => {
                       onClick={() => scrollToSection("posters")}
                       className="px-8 py-4 rounded-full border border-white/15 bg-white/5 text-white/85 hover:bg-white/10 transition"
                     >
-                      View Intra College Events
+                      View other events
                     </button>
                   </div>
                 </div>
@@ -1208,6 +1224,7 @@ useEffect(() => {
           </div>
         </section>
 
+        <GuestRevealCountdown />
         {/* CONTACT */}
         <section id="contact" className="py-16 px-6 border-t border-yellow-600/20">
           <div 

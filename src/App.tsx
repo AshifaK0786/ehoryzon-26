@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EHorizon from "./pages/ehorizon";
 import AboutUs from "./pages/aboutus";
+import Schedule from "./pages/schedule";
 import PitchRegister from "./pages/pitch";
 import RegistrationPage from "./pages/registration";
 import EventRegister from "./pages/eventRegister";
@@ -20,6 +21,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<EHorizon/>} />
         <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/schedule" element={<Schedule />} />
         <Route path="/register/pitch" element={<PitchRegister />} />
             <Route path="/registration" element={<RegistrationPage />} />
             <Route path="/register/thirai-trivia" element={<ThiraiTriviaRegister />} />
