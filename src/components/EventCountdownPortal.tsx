@@ -37,7 +37,7 @@ const EventCountdownPortal = () => {
   }, [currentTime]);
 
   return (
-    <div className="w-full bg-black py-32 px-6 border-t border-yellow-600/20">
+    <div className="w-full bg-transparent py-32 px-6 border-t border-yellow-600/20">
       <style>{`
         @keyframes pulse-glow {
           0%, 100% { 

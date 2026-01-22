@@ -51,7 +51,7 @@ const GuestRevealCountdown = () => {
   const currentGuests = guests.slice(carouselIndex, carouselIndex + 2);
 
   return (
-    <div className="w-full bg-gradient-to-b from-black via-black to-black/95 py-20 px-6 border-t border-yellow-600/20">
+    <div className="w-full bg-transparent py-20 px-6 border-t border-yellow-600/20">
       <style>{`
         @keyframes fade-in-up {
           0% { opacity: 0; transform: translateY(20px); }

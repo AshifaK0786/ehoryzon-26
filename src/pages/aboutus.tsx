@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import AnimatedBackground from "../components/AnimatedBackground";
 import herologo from "../assets/hero-logo.png";
 import iic from "../assets/IIC_Logo_Transparent.png";
 import emdc from "../assets/EMDC Transpernt.png";
@@ -487,7 +488,7 @@ function OrganizationsSection() {
   }, []);
 
   return (
-    <section className="py-20 px-6 bg-black">
+    <section className="py-20 px-6 bg-transparent">
     </section>
   );
 }
@@ -794,7 +795,8 @@ export default function AboutUs() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen text-white relative">
+      <AnimatedBackground />
       <style>{`
         .no-scrollbar {
           -ms-overflow-style: none;

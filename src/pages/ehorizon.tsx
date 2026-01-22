@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 
+
  
 import herologo from "../assets/hero-logo.png";
 import event1 from "../assets/event1.jpeg";
@@ -25,6 +26,7 @@ import events from "../data/events";
 import { intraeventList, interEventList, workshopList, performingArtsList } from "../data/events";
 import EventCountdownPortal from "../components/EventCountdownPortal";
 import GuestRevealCountdown from "../components/GuestRevealCountdown";
+import AnimatedBackground from "../components/AnimatedBackground";
 
 // ✅ your hero video (change path/name)
 import heroVideo from "../assets/hero.mp4";
@@ -238,205 +240,6 @@ export default function EHorizon() {
   const navigate = useNavigate();
   const [strikeGlow, setStrikeGlow] = useState(false);
   const strikeTimerRef = useRef(null);
-  const bgCanvasRef = useRef<HTMLCanvasElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  // Animated Festival Sky Background Setup
-  useEffect(() => {
-    const canvas = bgCanvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Cloud class
-    class Cloud {
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-      speed: number;
-      opacity: number;
-      layer: number;
-
-      constructor(layer: number) {
-        this.layer = layer;
-        this.speed = 0.1 + layer * 0.15;
-        this.opacity = 0.3 + layer * 0.2;
-        this.width = 100 + layer * 50;
-        this.height = 40 + layer * 20;
-        this.y = Math.random() * (canvas.height * 0.4) + canvas.height * 0.1;
-        this.x = Math.random() * (canvas.width + this.width) - this.width;
-      }
-
-      update() {
-        this.x += this.speed;
-        if (this.x > canvas.width) {
-          this.x = -this.width;
-          this.y = Math.random() * (canvas.height * 0.4) + canvas.height * 0.1;
-        }
-      }
-
-      draw(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.ellipse(this.x, this.y, this.width, this.height, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.ellipse(this.x + this.width * 0.3, this.y - this.height * 0.4, this.width * 0.5, this.height * 0.6, 0, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // Parachute class
-    class Parachute {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-      wobblePhase: number;
-
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = 0.3 + Math.random() * 0.3;
-        this.size = 30 + Math.random() * 40;
-        this.opacity = 0.4 + Math.random() * 0.4;
-        this.wobblePhase = Math.random() * Math.PI * 2;
-      }
-
-      update() {
-        this.y += this.vy;
-        this.wobblePhase += 0.03;
-        this.vx = Math.sin(this.wobblePhase) * 0.5;
-        this.x += this.vx;
-
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) {
-          this.y = -50;
-          this.x = Math.random() * canvas.width;
-        }
-      }
-
-      draw(ctx: CanvasRenderingContext2D) {
-        ctx.save();
-        ctx.globalAlpha = this.opacity;
-
-        // Parachute canopy
-        ctx.fillStyle = `hsl(${Math.random() * 60 + 330}, 80%, 60%)`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Parachute strings
-        ctx.strokeStyle = 'rgba(150, 150, 150, 0.5)';
-        ctx.lineWidth = 1;
-        for (let i = 0; i < 4; i++) {
-          const angle = (i / 4) * Math.PI * 2;
-          const px = this.x + Math.cos(angle) * this.size * 0.7;
-          const py = this.y + Math.sin(angle) * this.size * 0.7;
-          ctx.beginPath();
-          ctx.moveTo(px, py);
-          ctx.lineTo(this.x, this.y + this.size + 20);
-          ctx.stroke();
-        }
-
-        ctx.restore();
-      }
-    }
-
-    const clouds: Cloud[] = [
-      new Cloud(0),
-      new Cloud(1),
-      new Cloud(2),
-      new Cloud(0),
-      new Cloud(1),
-      new Cloud(2),
-    ];
-
-    const parachutes: Parachute[] = Array.from({ length: 8 }, () => new Parachute());
-    let animationId: number;
-    let time = 0;
-    let scrollOffset = 0;
-
-    const handleScroll = () => {
-      scrollOffset = window.scrollY * 0.5;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    const animate = () => {
-      // Sky gradient (blue → purple → pink)
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      const timePhase = Math.sin(time * 0.001) * 0.1;
-
-      gradient.addColorStop(0, `hsl(220, 70%, ${55 + timePhase * 5}%)`);
-      gradient.addColorStop(0.3, `hsl(240, 60%, ${50 + timePhase * 5}%)`);
-      gradient.addColorStop(0.6, `hsl(280, 55%, ${45 + timePhase * 5}%)`);
-      gradient.addColorStop(1, `hsl(320, 65%, ${40 + timePhase * 5}%)`);
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Sun/glow effect
-      const sunX = canvas.width * 0.8;
-      const sunY = canvas.height * 0.2;
-      const sunGradient = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 200);
-      sunGradient.addColorStop(0, 'rgba(255, 200, 0, 0.3)');
-      sunGradient.addColorStop(1, 'rgba(255, 100, 0, 0)');
-      ctx.fillStyle = sunGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Update and draw clouds
-      clouds.forEach((cloud) => {
-        cloud.update();
-        ctx.save();
-        ctx.globalAlpha = cloud.opacity;
-        cloud.draw(ctx);
-        ctx.restore();
-      });
-
-      // Update and draw parachutes
-      parachutes.forEach((parachute) => {
-        parachute.update();
-        parachute.draw(ctx);
-      });
-
-      // Parallax starfield (subtle)
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-      for (let i = 0; i < 50; i++) {
-        const starX = (i * 73.5 + scrollOffset * 0.1) % canvas.width;
-        const starY = (i * 123.4) % (canvas.height * 0.3);
-        ctx.fillRect(starX, starY, 1, 1);
-      }
-
-      time++;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const handleStrike = useCallback(() => {
     setStrikeGlow(true);
@@ -624,19 +427,8 @@ useEffect(() => {
 }
       `}</style>
 
-      <div className="bg-black text-white min-h-screen overflow-x-hidden">
-        <canvas
-          ref={bgCanvasRef}
-          className="fixed inset-0 -z-10"
-          style={{
-            background: 'linear-gradient(135deg, #87CEEB 0%, #E0BBE4 50%, #FDBCB4 100%)',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-          }}
-        />
+      <div className="text-white min-h-screen overflow-x-hidden relative">
+        <AnimatedBackground />
         {/* NAVBAR */}
         <nav className="fixed top-0 w-full z-50">
           {!navCompact && (
