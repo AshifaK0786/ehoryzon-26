@@ -16,9 +16,7 @@ import { useNavigate } from "react-router-dom";
 
  
 import herologo from "../assets/hero-logo.png";
-import event1 from "../assets/event1.jpeg";
-import event2 from "../assets/event2.jpeg";
-import event3 from "../assets/event3.jpeg"
+import kecLogo from "../assets/kec.png";
 import emdc from "../assets/EMDC Transpernt.png"
 import iic from "../assets/IIC_Logo_Transparent.png"
 
@@ -434,6 +432,7 @@ useEffect(() => {
           {!navCompact && (
             <div className="max-w-7xl mx-auto px-6 pt-6">
               <div className="flex items-center justify-between">
+                <img src={kecLogo} alt="kec logo" className="h-12 w-auto" />
                 <img src={herologo} alt="logo" className="h-12 w-auto" />
                 <img src={iic} alt="logo" className="h-12 w-auto" />
                 <img src={emdc} alt="logo" className="h-12 w-auto" />
@@ -515,6 +514,7 @@ useEffect(() => {
           {navCompact && (
             <div className="w-full flex justify-center pt-4 px-4">
               <div className="flex items-center gap-24 rounded-full border border-white/15 bg-black/35 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.55)] px-20 py-2">
+                <img src={kecLogo} alt="KEC" className="h-9 w-auto opacity-90" />
                 <img src={herologo} alt="E-Horyzon" className="h-9 w-auto opacity-90" />
                 <img src={iic} alt="IIC" className="h-9 w-auto opacity-90" />
                 <img src={emdc} alt="EMDC" className="h-9 w-auto opacity-90" />

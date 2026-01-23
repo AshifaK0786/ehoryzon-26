@@ -7,13 +7,16 @@ type Person = {
   name: string;
   roll: string;
   department: string;
+  collegeName?: string;
   year: string;
   mobile: string;
   email: string;
+  collegeType?: "intra" | "inter";
 };
 
 export function EventRegisterForm({ event }: { event?: any }) {
   const navigate = useNavigate();
+  const [collegeType, setCollegeType] = useState<"intra" | "inter" | "">("");
 
   const [person, setPerson] = useState<Person>({
     name: "",
@@ -22,6 +25,7 @@ export function EventRegisterForm({ event }: { event?: any }) {
     year: "1",
     mobile: "",
     email: "",
+    collegeType: undefined,
   });
 
   const [team, setTeam] = useState<Person[]>([]);
@@ -60,7 +64,7 @@ export function EventRegisterForm({ event }: { event?: any }) {
 
   const addTeamMember = () => {
     if (team.length >= allowedExtra) return;
-    setTeam((t) => [...t, { name: "", roll: "", department: "", year: "1", mobile: "", email: "" }]);
+    setTeam((t) => [...t, { name: "", roll: "", department: "", collegeName: "", year: "1", mobile: "", email: "" }]);
   };
 
   const updateTeamMember = (index: number, k: keyof Person, v: string) => {
@@ -77,17 +81,27 @@ export function EventRegisterForm({ event }: { event?: any }) {
   };
 
   const validate = () => {
+    if (!collegeType) return "Please select Intra-college or Inter-college first";
     if (!person.name.trim()) return "Name is required";
     if (!person.roll.trim()) return "Roll number is required";
     if (!person.department) return "Department is required";
+    if (collegeType === "inter" && !person.collegeName?.trim()) return "College name is required for Inter-college";
     if (!person.mobile.trim()) return "Mobile number is required";
     if (!person.email.trim()) return "Email is required";
-    if (!person.email.endsWith("@kongu.edu")) return "Email must be a kongu.edu address";
+    
+    if (collegeType === "intra") {
+      if (!person.email.endsWith("@kongu.edu")) return "Email must be a kongu.edu address for Intra-college";
+    }
+    
     for (let i = 0; i < team.length; i++) {
       const m = team[i];
       if (!m.name.trim()) return `Team member ${i + 1} name required`;
       if (!m.roll.trim()) return `Team member ${i + 1} roll required`;
-      if (!m.email.endsWith("@kongu.edu")) return `Team member ${i + 1} must use kongu.edu email`;
+      if (!m.department) return `Team member ${i + 1} department required`;
+      if (collegeType === "inter" && !m.collegeName?.trim()) return `Team member ${i + 1} college name required for Inter-college`;
+      if (!m.email.trim()) return `Team member ${i + 1} email required`;
+      
+      if (collegeType === "intra" && !m.email.endsWith("@kongu.edu")) return `Team member ${i + 1} must use kongu.edu email for Intra-college`;
     }
     return "";
   };
@@ -213,6 +227,44 @@ export function EventRegisterForm({ event }: { event?: any }) {
                 {error}
               </div>
             )}
+
+            {/* College Type Selection - Must be done first */}
+            <div>
+              <label className="text-sm text-white/70 font-semibold">Participation Type * (Select First)</label>
+              <div className="mt-3 flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setCollegeType("intra")}
+                  className={`flex-1 py-3 px-4 rounded-2xl font-semibold transition ${
+                    collegeType === "intra"
+                      ? "bg-yellow-400 text-black border border-yellow-400"
+                      : "bg-black/40 border border-yellow-600/20 text-white hover:border-yellow-500/60"
+                  }`}
+                >
+                  Intra-College (KEC)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCollegeType("inter")}
+                  className={`flex-1 py-3 px-4 rounded-2xl font-semibold transition ${
+                    collegeType === "inter"
+                      ? "bg-yellow-400 text-black border border-yellow-400"
+                      : "bg-black/40 border border-yellow-600/20 text-white hover:border-yellow-500/60"
+                  }`}
+                >
+                  Inter-College
+                </button>
+              </div>
+              {!collegeType && <p className="mt-2 text-xs text-yellow-300">Please select your participation type to continue</p>}
+            </div>
+
+            {/* Only show form if college type is selected */}
+            {!collegeType ? (
+              <div className="text-center py-8">
+                <p className="text-white/70">👆 Please select Intra-College or Inter-College above to begin registration</p>
+              </div>
+            ) : (
+              <>
             {maxTeam > 1 && (
               <div>
                 <label className="text-sm text-white/70">Team Name </label>
@@ -237,15 +289,28 @@ export function EventRegisterForm({ event }: { event?: any }) {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm text-white/70">Department *</label>
-                  <select value={person.department} onChange={(e) => handlePersonChange("department", e.target.value)} className="mt-2 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none focus:border-yellow-500/60">
-                    <option value="">Select department</option>
-                    {departments.map((d) => (
-                      <option key={d} value={d}>{d}</option>
-                    ))}
-                  </select>
-                </div>
+                {collegeType === "intra" ? (
+                  <div>
+                    <label className="text-sm text-white/70">Department *</label>
+                    <select value={person.department} onChange={(e) => handlePersonChange("department", e.target.value)} className="mt-2 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none focus:border-yellow-500/60">
+                      <option value="">Select department</option>
+                      {departments.map((d) => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <label className="text-sm text-white/70">College Name *</label>
+                      <input value={person.collegeName || ""} onChange={(e) => handlePersonChange("collegeName", e.target.value)} placeholder="Your college name" className="mt-2 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none focus:border-yellow-500/60" />
+                    </div>
+                    <div>
+                      <label className="text-sm text-white/70">Department *</label>
+                      <input value={person.department} onChange={(e) => handlePersonChange("department", e.target.value)} placeholder="Your department" className="mt-2 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none focus:border-yellow-500/60" />
+                    </div>
+                  </>
+                )}
 
                 <div>
                   <label className="text-sm text-white/70">Year of study *</label>
@@ -265,8 +330,9 @@ export function EventRegisterForm({ event }: { event?: any }) {
                 </div>
 
                 <div>
-                  <label className="text-sm text-white/70">Email ID (must be @kongu.edu) *</label>
-                  <input value={person.email} onChange={(e) => handlePersonChange("email", e.target.value)} placeholder="your@kongu.edu" className="mt-2 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none focus:border-yellow-500/60" />
+                  <label className="text-sm text-white/70">Email ID {collegeType === "intra" ? "(must be @kongu.edu)" : "(any email)"} *</label>
+                  <input value={person.email} onChange={(e) => handlePersonChange("email", e.target.value)} placeholder={collegeType === "intra" ? "your@kongu.edu" : "your@email.com"} className="mt-2 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none focus:border-yellow-500/60" />
+                  <p className="mt-1 text-xs text-white/50">{collegeType === "intra" ? "Use your Kongu Engineering College email" : "Use your college or personal email"}</p>
                 </div>
               </div>
             </section>
@@ -304,13 +370,26 @@ export function EventRegisterForm({ event }: { event?: any }) {
                           <input value={m.roll} onChange={(e) => updateTeamMember(idx, "roll", e.target.value)} placeholder="Roll number" className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none" />
                         </div>
 
-                        <div>
-                          <label className="text-sm text-white/70">Department</label>
-                          <select value={m.department} onChange={(e) => updateTeamMember(idx, "department", e.target.value)} className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none">
-                            <option value="">Department</option>
-                            {departments.map((d) => (<option key={d} value={d}>{d}</option>))}
-                          </select>
-                        </div>
+                        {collegeType === "intra" ? (
+                          <div>
+                            <label className="text-sm text-white/70">Department</label>
+                            <select value={m.department} onChange={(e) => updateTeamMember(idx, "department", e.target.value)} className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none">
+                              <option value="">Select department</option>
+                              {departments.map((d) => (<option key={d} value={d}>{d}</option>))}
+                            </select>
+                          </div>
+                        ) : (
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="text-sm text-white/70">College Name</label>
+                              <input value={m.collegeName || ""} onChange={(e) => updateTeamMember(idx, "collegeName", e.target.value)} placeholder="College name" className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none" />
+                            </div>
+                            <div>
+                              <label className="text-sm text-white/70">Department</label>
+                              <input value={m.department} onChange={(e) => updateTeamMember(idx, "department", e.target.value)} placeholder="Your department" className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none" />
+                            </div>
+                          </div>
+                        )}
 
                         <div>
                           <label className="text-sm text-white/70">Year of study</label>
@@ -328,8 +407,8 @@ export function EventRegisterForm({ event }: { event?: any }) {
                         </div>
 
                         <div>
-                          <label className="text-sm text-white/70">Email (kongu.edu)</label>
-                          <input value={m.email} onChange={(e) => updateTeamMember(idx, "email", e.target.value)} placeholder="Email (kongu.edu)" className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none" />
+                          <label className="text-sm text-white/70">Email {collegeType === "intra" ? "(kongu.edu)" : "(any email)"}</label>
+                          <input value={m.email} onChange={(e) => updateTeamMember(idx, "email", e.target.value)} placeholder={collegeType === "intra" ? "email@kongu.edu" : "email@domain.com"} className="mt-1 w-full rounded-2xl bg-black/40 border border-yellow-600/20 px-4 py-3 outline-none" />
                         </div>
                       </div>
                     </div>
@@ -338,7 +417,13 @@ export function EventRegisterForm({ event }: { event?: any }) {
               </div>
             )}
 
-            <div>
+            {/* Close the conditional collegeType wrapper */}
+              </>
+            )}
+
+            {collegeType && (
+              <>
+              <div>
               <label className="block text-sm text-white/80 mb-1">Payment QR</label>
               <p className="text-white/70 mb-4">Scan the QR below to pay the event fee.</p>
 
@@ -384,6 +469,8 @@ export function EventRegisterForm({ event }: { event?: any }) {
             <div className="pt-4">
               <button type="submit" className="px-6 py-3 bg-yellow-400 text-black rounded font-bold">Submit Registration</button>
             </div>
+            </>
+            )}
           </form>
         </div>
         {showGuidelines && guidelineUrl ? (

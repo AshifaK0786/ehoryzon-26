@@ -12,7 +12,7 @@ import parameshwaransir from "../assets/parameshwaransir.jpeg";
 import kannansir from "../assets/kannansir.jpeg";
 import praveensir from "../assets/praveensir.jpeg";
 
-const logos = [herologo, iic, emdc, herologo, iic, emdc, kec,tbi];
+const logos = [kec, herologo, iic, emdc];
 
 const staffData = [
   {
@@ -158,26 +158,14 @@ function LogoMarquee() {
   return (
     <div className="absolute top-0 left-0 right-0 z-20 py-4 border-b border-white/5">
       <div className="relative">
-        <div className="flex gap-8 whitespace-nowrap animate-marquee will-change-transform" style={{ animationPlayState: 'running' }}>
+        <div className="flex gap-60
+         items-center justify-center px-6">
           {logos.map((src, i) => (
-            <div key={i} className="flex items-center justify-center px-6">
+            <div key={i} className="flex items-center justify-center">
               <img src={src} alt={`logo-${i}`} className="h-12 w-auto opacity-95 object-contain" onError={(e)=> (e.currentTarget.style.display='none')} />
             </div>
           ))}
         </div>
-        <style>{`
-          @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-marquee {
-            display: inline-flex;
-            align-items: center;
-            gap: 4rem;
-            animation: marquee 18s linear infinite;
-          }
-          .animate-marquee:hover { animation-play-state: paused; }
-        `}</style>
       </div>
     </div>
   );
@@ -255,7 +243,7 @@ function VideoSection() {
   return (
     <section
       ref={ref}
-      className={`relative min-h-screen flex items-center justify-center transition-all duration-700 ease-out ${
+      className={`relative min-h-screen flex items-center justify-center pt-24 transition-all duration-700 ease-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
       style={{
@@ -271,7 +259,7 @@ function VideoSection() {
       </div>
 
       <div className="relative z-10 px-6 py-16 max-w-7xl mx-auto">
-        <h2 className="text-5xl md:text-6xl font-bold text-center mb-16 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Our Ecosystem</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Our Ecosystem</h2>
         
         <div className="grid md:grid-cols-2 gap-12">
           {/* IEF@KEC */}
@@ -342,7 +330,7 @@ function StaffSection() {
   return (
     <section
       ref={ref}
-      className={`py-12 px-6 max-w-6xl mx-auto transition-all duration-700 ease-out ${
+      className={`py-6 px-6 max-w-6xl mx-auto transition-all duration-700 ease-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
       style={{
