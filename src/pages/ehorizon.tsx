@@ -514,22 +514,20 @@ useEffect(() => {
           )}
 
           {navCompact && (
-            <div className="w-full flex justify-center pt-2 md:pt-4 px-2 md:px-4">
-              <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8 lg:gap-24 rounded-full border border-white/15 bg-black/35 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.55)] px-3 sm:px-6 md:px-12 lg:px-20 py-1.5 md:py-2">
-                <img src={kecLogo} alt="KEC" className="h-6 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
-                <img src={herologo} alt="E-Horyzon" className="h-6 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
-                <img src={iic} alt="IIC" className="h-6 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
-                <img src={emdc} alt="EMDC" className="h-6 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
+            <div className="w-full flex justify-center pt-4 px-4">
+              <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-8 lg:gap-24 rounded-full border border-white/15 bg-black/35 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.55)] px-3 sm:px-6 md:px-12 lg:px-20 py-1.5 sm:py-2">
+                <img src={kecLogo} alt="KEC" className="h-5 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
+                <img src={herologo} alt="E-Horyzon" className="h-5 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
+                <img src={iic} alt="IIC" className="h-5 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
+                <img src={emdc} alt="EMDC" className="h-5 sm:h-8 md:h-9 w-auto opacity-90" style={{ alignSelf: 'center' }} />
 
                 <button
                   onClick={() => navigate("/register/pitch")}
-                  className="ml-1 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white text-black font-semibold border border-white/60 text-xs sm:text-base"
+                  className="ml-1 flex items-center gap-1.5 sm:gap-3 px-2.5 sm:px-4 py-1 sm:py-2 rounded-full bg-white text-black font-semibold border border-white/60 text-[10px] sm:text-sm md:text-base"
                 >
-                  <span className="hidden sm:inline">Register Now!</span>
-                  <span className="sm:hidden">Register</span>
-                  <span className="w-6 h-6 sm:w-9 sm:h-9 rounded-full bg-black/90 text-white flex items-center justify-center">
-                    <ArrowRight size={14} className="sm:hidden" />
-                    <ArrowRight size={18} className="hidden sm:block" />
+                  <span className="whitespace-nowrap">Register Now!</span>
+                  <span className="w-5 h-5 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-black/90 text-white flex items-center justify-center">
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 md:w-[18px] md:h-[18px]" />
                   </span>
                 </button>
               </div>
@@ -576,13 +574,13 @@ useEffect(() => {
 
           {/* bottom meta */}
           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 px-6 w-full">
-            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 text-white/90">
-              <div className="flex items-center gap-3">
-                <Calendar className="text-yellow-400" />
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-white/90">
+              <div className="flex items-center gap-3 text-xs sm:text-sm md:text-xl lg:text-2xl font-semibold hover:text-yellow-400 md:hover:scale-110 transition-all duration-300 cursor-pointer">
+                <Calendar className="text-yellow-400 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
                 March 2-6, 2026
               </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="text-yellow-400" />
+              <div className="flex items-center gap-3 text-xs sm:text-sm md:text-xl lg:text-2xl font-semibold hover:text-yellow-400 md:hover:scale-110 transition-all duration-300 cursor-pointer">
+                <MapPin className="text-yellow-400 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
                 Kongu Engineering College, Erode
               </div>
             </div>
@@ -676,7 +674,7 @@ useEffect(() => {
             {/* ✅ EVENTS */}
             <div id="posters" className="mt-20 mb-12">
               <h3 className="text-4xl md:text-5xl font-black text-center mb-12 glow-text-permanent">
-                <span>E-Horyzon</span> <span>Events</span>
+                <span>E-Horizon</span> <span>Events</span>
               </h3>
 
               {/* Date Filter */}
@@ -731,18 +729,19 @@ useEffect(() => {
                             data-index={i}
                             className={[
                               "relative rounded-2xl overflow-hidden border bg-black",
-                              "border-yellow-600/20",
+                              "border-yellow-600/20 hover:border-yellow-400/50",
                               "transition-all duration-700 ease-out will-change-transform",
+                              "hover:shadow-lg hover:shadow-yellow-300/30",
                               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
                             ].join(" ")}
                             style={{ transitionDelay: `${Math.min(i, 6) * 90}ms` }}
                           >
-                      <div className="aspect-[3/4] relative rounded-3xl border-4 border-black hover:border-yellow-400 p-1 overflow-hidden transition-all duration-300">
+                      <div className="aspect-[3/4] relative rounded-3xl border-4 border-black hover:border-yellow-400 p-1 overflow-hidden transition-all duration-300 hover:scale-105">
                         <div className="relative w-full h-full rounded-2xl overflow-hidden">
                           <img
                             src={e.image}
                             alt={e.title}
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="absolute inset-0 w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                             onError={(ev) => (ev.currentTarget.style.display = "none")}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
@@ -806,18 +805,19 @@ useEffect(() => {
                           data-index={baseIdx}
                           className={[
                             "relative rounded-2xl overflow-hidden border bg-black",
-                            "border-yellow-600/20",
+                            "border-yellow-600/20 hover:border-yellow-400/50",
                             "transition-all duration-700 ease-out will-change-transform",
+                            "hover:shadow-lg hover:shadow-yellow-300/30",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
                           ].join(" ")}
                           style={{ transitionDelay: `${Math.min(baseIdx, 12) * 90}ms` }}
                         >
-                      <div className="aspect-[3/4] relative rounded-3xl border-4 border-black hover:border-yellow-400 p-1 overflow-hidden transition-all duration-300">
+                      <div className="aspect-[3/4] relative rounded-3xl border-4 border-black hover:border-yellow-400 p-1 overflow-hidden transition-all duration-300 hover:scale-105">
                         <div className="relative w-full h-full rounded-2xl overflow-hidden">
                           <img
                             src={e.image}
                             alt={e.title}
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="absolute inset-0 w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                             onError={(ev) => (ev.currentTarget.style.display = "none")}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
@@ -1038,32 +1038,16 @@ useEffect(() => {
 
         {/* CREATORS */}
         <section className="py-12 px-6 border-t border-yellow-600/20">
-          <div className="max-w-7xl mx-auto text-center space-y-6">
-            
-            <div>
-              <p className="text-yellow-400 text-sm md:text-base font-bold uppercase tracking-widest mb-3">Deployment & Hosting Support</p>
-              <p 
-                className="text-2xl md:text-4xl font-light italic text-white/70 glow-text cursor-pointer"
-                style={{
-                  fontFamily: "'Brush Script MT', cursive",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                V Harrisjaya Kumar
-              </p>
-            </div>
-            <div>
-              <p className="text-yellow-400 text-sm md:text-base font-bold uppercase tracking-widest mb-3">Site Developers</p>
-              <p 
-                className="text-2xl md:text-4xl font-light italic text-white/70 glow-text cursor-pointer"
-                style={{
-                  fontFamily: "'Brush Script MT', cursive",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                Abdul Sahith - AIDS & Ashifa - CSE
-              </p>
-            </div>
+          <div className="max-w-7xl mx-auto text-center">
+            <p 
+              className="text-2xl md:text-4xl font-light italic text-white/70 glow-text cursor-pointer"
+              style={{
+                fontFamily: "'Brush Script MT', cursive",
+                letterSpacing: "0.05em",
+              }}
+            >
+              Abdul Sahith - AIDS & Ashifa - CSE
+            </p>
           </div>
         </section>
 

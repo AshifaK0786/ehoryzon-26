@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import events from "../data/events";
-import { Event, Person } from "../types";
+import type { Event, Person } from "../types";
 
 export function EventRegisterForm({ event }: { event?: Event }) {
   const navigate = useNavigate();
@@ -128,7 +128,7 @@ export function EventRegisterForm({ event }: { event?: Event }) {
     // (optional) single file example:
     if (screenshots[0]) fd.append("payment_screenshots", screenshots[0]);
 
-    const res = await fetch(`https://sahith.xyz/${event.slug}/register/`, {
+    const res = await fetch(`https://sahith.xyz/${event!.slug}/register/`, {
       method: "POST",
       body: fd,
     });
@@ -281,8 +281,8 @@ export function EventRegisterForm({ event }: { event?: Event }) {
               <div className="grid md:grid-cols-2 gap-2 md:gap-4">
                 {collegeType === "intra" ? (
                   <div>
-                    <label className="text-xs md:text-sm text-white/70\">Department *</label>
-                    <select value={person.department} onChange={(e) => handlePersonChange("department", e.target.value)} className="mt-1 md:mt-2 w-full rounded-xl md:rounded-2xl bg-black/40 border border-yellow-600/20 px-3 md:px-4 py-2 md:py-3 text-xs md:text-sm outline-none focus:border-yellow-500/60\">
+                    <label className="text-xs md:text-sm text-white/70">Department *</label>
+                    <select value={person.department} onChange={(e) => handlePersonChange("department", e.target.value)} className="mt-1 md:mt-2 w-full rounded-xl md:rounded-2xl bg-black/40 border border-yellow-600/20 px-3 md:px-4 py-2 md:py-3 text-xs md:text-sm outline-none focus:border-yellow-500/60">
                       <option value="">Select department</option>
                       {departments.map((d) => (
                         <option key={d} value={d}>{d}</option>
@@ -486,6 +486,6 @@ export function EventRegisterForm({ event }: { event?: Event }) {
 
 export default function EventRegister() {
   const { slug } = useParams();
-  const event = events.find((e) => e.slug === slug);
+  const event = events.find((e) => e.slug === slug) as Event | undefined;
   return <EventRegisterForm event={event} />;
 }

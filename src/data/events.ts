@@ -130,7 +130,7 @@ export const intraeventList: Event[] = [
 ];
 
 // ✅ INTER COLLEGE EVENTS (in order: IPL Auction, Stocks and Shares, Master Chef Mania, B-Plan, DETx Forum)
-export const interEventList: Event[] = [
+export const interEventList = [
   {
     slug: "ipl-auction",
     title: "IPL Auction",
@@ -183,7 +183,6 @@ export const interEventList: Event[] = [
     registerUrl: "/register/masterchef-mania",
     qrImage: "/assets/qr/common-qr.png",
     maxTeamMembers: 3,
-    category: "inter",
     descriptionLines: [
       "Fun and interactive cooking competition inspired by Cook with Comali format.",
       "Teams of three showcase culinary skills, creativity, and teamwork with engaging twists.",
@@ -243,7 +242,7 @@ export const interEventList: Event[] = [
 ];
 
 // ✅ WORKSHOPS / TALENTIA (in order: Product-Market Fit, Business Market Fit, Rising Capital & Finance Management, IPR & IP Management, Startup Legal & Ethical Steps)
-export const workshopList: Event[] = [
+export const workshopList = [
   {
     slug: "product-market-fit",
     title: "Product-Market Fit",
@@ -357,7 +356,7 @@ export const workshopList: Event[] = [
 ];
 
 // ✅ PERFORMING ARTS / FILMS (Thirai Trivia)
-export const performingArtsList: Event[] = [
+export const performingArtsList = [
   {
     slug: "thirai-trivia",
     title: "திரை-Trivia",
@@ -382,7 +381,7 @@ export const performingArtsList: Event[] = [
 ];
 
 // ✅ Backward compatibility - all events combined
-export const events: Event[] = [
+export const events = [
   ...intraeventList,
   ...interEventList,
   ...workshopList,

@@ -173,7 +173,7 @@ function GuestRevealCarousel() {
                   : "scale-50 opacity-0 hidden"
               }`}
             >
-              <GuestCard guest={guest} index={guest.id - 1} />
+              <GuestCard guest={guest} />
             </div>
           ))}
         </div>

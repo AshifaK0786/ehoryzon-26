@@ -4,8 +4,14 @@ import { ArrowLeft, Calendar, MapPin, Clock } from "lucide-react";
 import AnimatedBackground from "../components/AnimatedBackground";
 
 const scheduleData = [
-  { name: "PITCH FOR TOMORROW", date: "Feb 23 - 27", day: "Mon - Fri", venue: "Maharaja Auditorium" }
-  ,
+  
+  { name: "Pitch for Tomorrow - Open Innovations", date: "March 2", day: "Monday", venue: "Kongu Engineering College" },
+  { name: "Pitch for Tomorrow - Mobility", date: "March 3", day: "Tuesday", venue: "Kongu Engineering College" },
+  { name: "Pitch for Tomorrow - Deeptech", date: "March 4", day: "Wednesday", venue: "Kongu Engineering College" },
+  { name: "Pitch for Tomorrow - Clean & Green Tech", date: "March 5", day: "Thursday", venue: "Kongu Engineering College" },
+  { name: "Pitch for Tomorrow - Medtech", date: "March 6", day: "Friday", venue: "Kongu Engineering College" },
+  { name: "Pitch for Tomorrow - Agritech", date: "March 7", day: "Saturday", venue: "Kongu Engineering College" },
+
   { name: "Mech Arena", date: "March 2", day: "Monday", venue: "Kongu Engineering College" },
 
   { name: "Webify", date: "March 2", day: "Monday", venue: "Kongu Engineering College" },
@@ -36,7 +42,7 @@ const scheduleData = [
 
   { name: "Startup Legal & Ethical", date: "March 7", day: "Saturday", venue: "Kongu Engineering College" },
 
-  { name: "திரை-Trivia (Short Film)", date: "TBA", day: "TBA", venue: "Kongu Engineering College" },
+  { name: "திரை-Trivia (Short Film)", date: "March 2 - 7", day: "March 2 - 7", venue: "Kongu Engineering College" },
   
 ];
 
@@ -61,8 +67,7 @@ export default function Schedule() {
           Event <span className="text-yellow-400">Schedule</span>
         </h1>
         <p className="text-white/60 text-lg max-w-2xl mb-12">
-          Mark your calendars for the most awaited innovation festival. 
-          Find all event timings and venues below.
+          Mark your calendars for the most awaited innovation festival. Find all event timings and venues below.
         </p>
 
         {/* Schedule Table */}

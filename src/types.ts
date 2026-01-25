@@ -6,7 +6,7 @@ export interface Event {
   registerUrl: string;
   qrImage: string;
   maxTeamMembers: number;
-  category: "intra" | "inter" | "workshop" | "arts";
+  category?: "intra" | "inter" | "workshop" | "arts";
   descriptionLines: string[];
   guidelinesFile?: string;
   contactLeft: string;

@@ -19,21 +19,31 @@ const staffData = [
     img: parameshwaransir,
     name: "Mr E R K Krishnan",
     role: "Correspondent @KEC",
+    desc: "Leading institutional vision and excellence",
   },
   {
     img: parameshwaransir,
     name: "Dr.R .Parameshwaran",
     role: "Principal",
+    desc: "Fostering innovation and academic excellence",
   },
   {
     img: kannansir,
     name: "Mr.P.S.Kannan",
     role: "Executive Director @KonguTBI",
+    desc: "Driving entrepreneurship and startup ecosystem",
   },
   {
     img: praveensir,
     name: "Dr.Praveen Kumar Subramanian",
     role: "president @KonguTBI",
+    desc: "Building bridges between innovation and industry",
+  },
+  {
+    img: praveensir,
+    name: "Dr.Praveen Kumar Subramanian",
+    role: "president @KonguTBI",
+    desc: "Building bridges between innovation and industry",
   },
 ];
 
@@ -42,6 +52,7 @@ const teamMembers = [
   {
     id: 1,
     name: "V HarrisjayaKumar",
+    designation: "Chairman",
     photo: "/assets/coordinatorspic/harrisjaya kumar.jpeg",
     linkedin: "https://www.linkedin.com/in/harrisjayakumar-v/",
     whatsapp: "https://wa.me/918838416061",
@@ -49,103 +60,82 @@ const teamMembers = [
   {
     id: 2,
     name: "G V Dheepiga",
+    designation: "Co-Chairwoman",
     photo: "/assets/coordinatorspic/deepiga.jpeg",
     linkedin: " https://www.linkedin.com/in/dheepiga-gv-992b4b379/",
     whatsapp: "https://wa.me/9095060234",
   },
+  
   {
     id: 3,
-    name: "G HariHaran",
-    photo: "/assets/coordinatorspic/HariHaran.jpeg",
-    linkedin: "https://www.linkedin.com/in/hariharan-ganeshpandian-89296a300/",
-    whatsapp: "https://wa.me/916383828539",
-  },
-  {
-    id: 4,
     name: "S Praneshbalaji",
+    designation: "Student Convener",
     photo: "/assets/coordinatorspic/pranesh.jpeg",
     linkedin: " https://www.linkedin.com/in/praneshbalaji30/",
     whatsapp: "https://wa.me/919566822541",
   },
   {
+    id: 4,
+    name: "G HariHaran",
+    designation: "Student Co-Convener",
+    photo: "/assets/coordinatorspic/HariHaran.jpeg",
+    linkedin: "https://www.linkedin.com/in/hariharan-ganeshpandian-89296a300/",
+    whatsapp: "https://wa.me/916383828539",
+  },
+  {
     id: 5,
     name: "M K Sai Sanjay",
+    designation: "Startups Activity Coordinator",
     photo: "/assets/coordinatorspic/SaiSanjay.jpeg",
     linkedin: "- https://www.linkedin.com/in/sai-sanjay-8a8044280/",
     whatsapp: "https://wa.me/919080938997",
   },
   {
+    id: 10,
+    name: "S Pragatheeswari",
+    designation: "Student Co-Convener",
+    photo: "/assets/coordinatorspic/pragatheeshwari.jpeg", 
+    linkedin: "https://www.linkedin.com/in/pragatheeswari-selvaraj-62527a320/",
+    whatsapp: "https://wa.me/9163740 43056",
+
+  },
+  {
     id: 6,
     name: "S Kanika",
+    designation: "Treasurer",
     photo: "/assets/coordinatorspic/kanika.jpeg",
     linkedin: " https://www.linkedin.com/in/kanika-sakthivel/",
     whatsapp: "https://wa.me/916374424880",
   },
   {
     id: 7,
-    name: "A S Haryni",
-    photo: "/assets/coordinatorspic/Haryni.jpeg",
-    linkedin: "-https://www.linkedin.com/in/haryni-a-s-2b75b1324/",
-    whatsapp: "https://wa.me/918015977095",
-  },
-  {
-    id: 8,
     name: "K Ashifa ",
-    photo: "/assets/coordinatorspic/Ashifa.jpeg",
+    designation: "Media Team Head",
+    photo: "/assets/coordinatorspic/ashifa.jpeg",
     linkedin: "https://www.linkedin.com/in/ashifa-k786/",
     whatsapp: "https://wa.me/919344939976",
   },
   {
-    id: 9,
+    id: 8,
     name: "P Santhosh",
+    designation: "Treasurer",
     photo: "/assets/coordinatorspic/",
     linkedin: " https://www.linkedin.com/in/santhosh-p-30a78933b/",
     whatsapp: "https://wa.me/919566971605",
   },
   {
-    id: 10,
+    id: 9,
     name: "M Abdul Sahith",
+    designation: "Technical Team Head",
     photo: "/assets/coordinatorspic/abdul.jpeg",
     linkedin: " https://www.linkedin.com/in/abdulsahith/",
     whatsapp: "https://wa.me/918056712504",
   },
-  {
-    id: 11,
-    name: "J Yuga Bharathi",
-    photo: "/assets/coordinatorspic/",
-    linkedin: "https://www.linkedin.com/in/yugabharathi21/",
-    whatsapp: "https://wa.me/918838144028",
-  },
-  {
-    id: 12,
-    name: "M Harini",
-    photo: "/assets/coordinatorspic/harinicsd.jpeg",
-    linkedin: "https://www.linkedin.com/in/harinim14/",
-    whatsapp: "https://wa.me/916380154463",
-  },
   
-  {
-    id: 13,
-    name: "L V Suriya",
-    photo: "",
-    linkedin: "#",
-    whatsapp: "https://wa.me/918870331488",
-  },
-  {
-    id: 14,
-    name: "V Dharshan Roshanth",
-    photo: "/assets/coordinatorspic/dharsan.png",
-    linkedin: "https://www.linkedin.com/in/dharshan-roshanth-25jun2005/",
-    whatsapp: "https://wa.me/919363197993",
-  },
-  {
-    id: 15,
-    name: "S Pragatheeswari",
-    photo: "/assets/coordinatorspic/pragatheeshwari.jpeg", 
-    linkedin: "https://www.linkedin.com/in/pragatheeswari-selvaraj-62527a320/",
-    whatsapp: "https://wa.me/9163740 43056",
+    
 
-  }
+  
+  
 ];
 
 // Coordinator carousels removed per request
@@ -154,10 +144,10 @@ function LogoMarquee() {
   return (
     <div className="absolute top-0 left-0 right-0 z-20 py-2 md:py-4 border-b border-white/5">
       <div className="relative">
-        <div className="flex gap-4 sm:gap-8 md:gap-20 lg:gap-60 items-center justify-center px-2 md:px-6">
+        <div className="flex gap-8 md:gap-20 lg:gap-60 items-center justify-center px-3 md:px-6">
           {logos.map((src, i) => (
             <div key={i} className="flex items-center justify-center">
-              <img src={src} alt={`logo-${i}`} className="h-5 sm:h-6 md:h-10 lg:h-12 w-auto opacity-95 object-contain" onError={(e)=> (e.currentTarget.style.display='none')} />
+              <img src={src} alt={`logo-${i}`} className="h-6 md:h-10 lg:h-12 w-auto opacity-95 object-contain" onError={(e)=> (e.currentTarget.style.display='none')} />
             </div>
           ))}
         </div>
@@ -334,35 +324,37 @@ function StaffSection() {
         transitionTimingFunction: "ease-out",
       }}
     >
-      <h3 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-8">Head Staff</h3>
-      <div className="space-y-4 md:space-y-10">
+      <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-center mb-12 md:mb-16 glow-text transform transition-all duration-500 hover:scale-105 hover:text-yellow-300 cursor-pointer">Meet Our Esteemed Dignitaries</h3>
+      <div className="space-y-8 md:space-y-14">
         {staffData.map((s, i) => (
-          <div key={i} className="grid gap-3 md:gap-6 items-center grid-cols-1 md:grid-cols-2">
+          <div key={i} className="grid gap-6 md:gap-10 items-center grid-cols-1 md:grid-cols-2 group">
             {i % 2 === 0 ? (
               <>
                 <div className="flex justify-center md:justify-start">
-                  <div className="w-24 h-24 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg flex-shrink-0">
-                    <img src={s.img} alt={s.name} className="w-full h-full object-cover" onError={(e)=> (e.currentTarget.style.display='none')} />
+                  <div className="w-40 h-40 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl flex-shrink-0 transform transition-all duration-500 hover:scale-110 hover:shadow-yellow-300/30 group-hover:shadow-yellow-300/50">
+                    <img src={s.img} alt={s.name} className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-125" onError={(e)=> (e.currentTarget.style.display='none')} />
                   </div>
                 </div>
                 <div>
-                  <div className="p-3 md:p-6 rounded-xl bg-white/3 border border-white/6 shadow-inner text-center md:text-left">
-                    <h4 className="text-base md:text-2xl font-semibold">{s.name}</h4>
-                    <div className="text-yellow-300 font-medium my-0.5 text-xs md:text-base">{s.role}</div>
+                  <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/2 border border-yellow-300/20 shadow-lg hover:shadow-yellow-300/20 hover:border-yellow-300/50 transition-all duration-500 transform hover:-translate-y-2">
+                    <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-yellow-300 mb-2">{s.name}</h4>
+                    <div className="text-yellow-200 font-semibold my-3 text-base md:text-lg">{s.role}</div>
+                    <p className="text-neutral-200 text-base md:text-lg leading-relaxed hover:text-white transition-colors">{s.desc}</p>
                   </div>
                 </div>
               </>
             ) : (
               <>
                 <div>
-                  <div className="p-3 md:p-6 rounded-xl bg-white/3 border border-white/6 shadow-inner text-center md:text-left">
-                    <h4 className="text-base md:text-2xl font-semibold">{s.name}</h4>
-                    <div className="text-yellow-300 font-medium my-0.5 text-xs md:text-base">{s.role}</div>
+                  <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/2 border border-yellow-300/20 shadow-lg hover:shadow-yellow-300/20 hover:border-yellow-300/50 transition-all duration-500 transform hover:-translate-y-2">
+                    <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-yellow-300 mb-2">{s.name}</h4>
+                    <div className="text-yellow-200 font-semibold my-3 text-base md:text-lg">{s.role}</div>
+                    <p className="text-neutral-200 text-base md:text-lg leading-relaxed hover:text-white transition-colors">{s.desc}</p>
                   </div>
                 </div>
                 <div className="flex justify-center md:justify-end">
-                  <div className="w-24 h-24 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg flex-shrink-0">
-                    <img src={s.img} alt={s.name} className="w-full h-full object-cover" onError={(e)=> (e.currentTarget.style.display='none')} />
+                  <div className="w-40 h-40 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl flex-shrink-0 transform transition-all duration-500 hover:scale-110 hover:shadow-yellow-300/30 group-hover:shadow-yellow-300/50">
+                    <img src={s.img} alt={s.name} className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-125" onError={(e)=> (e.currentTarget.style.display='none')} />
                   </div>
                 </div>
               </>
@@ -534,31 +526,24 @@ function TeamMembersCarousel() {
 
   const visibleMembers = getVisibleMembers();
 
-  interface TeamMember {
-    name: string;
-    photo?: string;
-    linkedin?: string;
-    whatsapp?: string;
-  }
-
   // Member card component
-  const MemberCard = ({ member, isCenter = false }: { member: TeamMember; isCenter?: boolean }) => (
-    <div className="flex flex-col items-center">
+  const MemberCard = ({ member, isCenter = false }: { member: any; isCenter?: boolean }) => (
+    <div className="flex flex-col items-center justify-center w-full">
       {/* Photo Card */}
-      <div className="relative mb-4 md:mb-6">
-        <div className={`rounded-2xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-900 shadow-xl aspect-square flex items-center justify-center ${
-          isCenter ? "w-48 h-48 md:w-64 md:h-64" : "w-40 h-40 md:w-48 md:h-48"
+      <div className="relative mb-2 sm:mb-4 md:mb-6 w-full flex justify-center group">
+        <div className={`rounded-2xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-900 shadow-2xl aspect-square flex items-center justify-center transform transition-all duration-500 hover:scale-110 hover:shadow-yellow-300/40 group-hover:shadow-yellow-300/50 ${
+          isCenter ? "w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64" : "w-28 h-28 sm:w-40 sm:h-40 md:w-48 md:h-48"
         }`}>
           {member.photo ? (
             <img
               src={member.photo}
               alt={member.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-125"
             />
           ) : (
             <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-400">
               <svg
-                className="w-16 h-16 md:w-24 md:h-24"
+                className="w-8 h-8 sm:w-16 sm:h-16 md:w-24 md:h-24"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -571,23 +556,24 @@ function TeamMembersCarousel() {
 
       {/* Member Details Card */}
       <div
-        className={`bg-white/3 border border-white/10 rounded-xl p-4 md:p-6 text-center backdrop-blur-sm transition-all ${
-          isCenter ? "w-64 md:w-72" : "w-48 md:w-56"
+        className={`bg-white/3 border border-white/10 rounded-xl p-2 sm:p-4 md:p-6 text-center backdrop-blur-sm transition-all w-full max-w-xs ${
+          isCenter ? "md:w-72" : "md:w-56"
         }`}
       >
-        <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">{member.name}</h3>
+        <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2 line-clamp-2">{member.name}</h3>
+        <p className="text-xs sm:text-sm md:text-base text-yellow-300 font-semibold mb-2 md:mb-3">{member.designation}</p>
 
         {/* Social Links */}
-        <div className="flex justify-center gap-2 md:gap-3">
+        <div className="flex justify-center gap-1.5 sm:gap-2 md:gap-3">
           <a
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors"
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors flex-shrink-0"
             title="LinkedIn"
           >
             <svg
-              className="w-4 h-4 md:w-5 md:h-5 text-white hover:text-black"
+              className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white hover:text-black"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -598,11 +584,11 @@ function TeamMembersCarousel() {
             href={member.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors"
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors flex-shrink-0"
             title="WhatsApp"
           >
             <svg
-              className="w-4 h-4 md:w-5 md:h-5 text-white hover:text-black"
+              className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white hover:text-black"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -627,11 +613,11 @@ function TeamMembersCarousel() {
         transitionTimingFunction: "ease-out",
       }}
     >
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-12">Our Team</h2>
+      <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-center mb-12 md:mb-16 glow-text transform transition-all duration-500 hover:scale-105 hover:text-yellow-300 cursor-pointer">Our Team</h2>
 
       {/* Mobile Grid View */}
       <div className="block md:hidden">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 px-2 sm:px-0">
           {teamMembers.map((member) => (
             <MemberCard key={member.id} member={member} isCenter={false} />
           ))}
@@ -738,54 +724,103 @@ function TeamMembersCarousel() {
 }
 
 function PosterCarousel({ images = [] }) {
-  const scrollerRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const videoRef = useRef(null);
 
-  const scrollByCard = (dir) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 360, behavior: "smooth" });
+  // Filter only videos
+  const videos = images.filter(src => src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov'));
+
+  if (videos.length === 0) return null;
+
+  const currentVideo = videos[currentIndex];
+
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
   };
 
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  // Intersection Observer to pause video when scrolled out of view
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (videoRef.current) {
+          if (!entry.isIntersecting) {
+            videoRef.current.pause();
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
+  }, []);
+
+  // Pause video when changing index
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [currentIndex]);
+
   return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => scrollByCard(-1)}
-        className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition"
-        aria-label="Scroll left"
-      >
-        <ChevronLeft size={18} />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => scrollByCard(1)}
-        className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition"
-        aria-label="Scroll right"
-      >
-        <ChevronRight size={18} />
-      </button>
-
-      <div
-        ref={scrollerRef}
-        className="no-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory"
-      >
-        <div className="flex gap-6 pr-[120px]">
-          {images.map((src, i) => (
-            <div
-              key={i}
-              className="snap-start shrink-0 w-[260px] sm:w-[320px] md:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden border border-yellow-600/20 bg-black relative"
-            >
-              <img
-                src={src}
-                alt={`carousel-${i}`}
-                className="relative z-10 w-full h-full object-cover"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
-            </div>
-          ))}
+    <div className="relative w-full">
+      {/* Main Video Display */}
+      <div className="relative w-full max-w-6xl mx-auto">
+        <div className="w-full aspect-video rounded-2xl overflow-hidden border border-yellow-600/20 bg-black shadow-lg shadow-yellow-300/20">
+          <video
+            ref={videoRef}
+            src={currentVideo}
+            className="w-full h-full object-cover"
+            controls
+            controlsList="nodownload"
+            autoPlay
+            muted
+          />
         </div>
+
+        {/* Navigation Buttons */}
+        {videos.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={handlePrevious}
+              className="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition-all hover:scale-110 shadow-lg"
+              aria-label="Previous video"
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              className="absolute -right-6 md:-right-12 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition-all hover:scale-110 shadow-lg"
+              aria-label="Next video"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </>
+        )}
       </div>
+
+
     </div>
   );
 }
@@ -795,10 +830,8 @@ function PosterCarousel({ images = [] }) {
 export default function AboutUs() {
   // mark todo step progress
   const highlightCarousel = [
-    "/assets/highlights/h1.jpg",
-    "/assets/highlights/h2.jpg",
-    "/assets/highlights/h3.jpg",
-    "/assets/highlights/last-event.jpg",
+    "/src/assets/hl/v2.mp4",
+    "/src/assets/hl/v1.mp4",
   ];
 
   return (
@@ -822,15 +855,15 @@ export default function AboutUs() {
 
       {/* Highlights Carousel */}
       <div className="px-4 md:px-6 py-8 md:py-16 max-w-7xl mx-auto">
-        <div className="flex items-end justify-between mb-4 md:mb-6">
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white">
-            Highlights Carousel
+        <div className="flex items-center justify-center mb-4 md:mb-6">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white hover:text-yellow-400 hover:scale-105 transition-all duration-300 cursor-pointer">
+            Highlights 
           </h3>
         </div>
         <PosterCarousel images={highlightCarousel} />
       </div>
 
-      <footer className="py-8 text-center text-neutral-400">&copy; {new Date().getFullYear()} Incubation & Innovation Cell</footer>
+      <footer className="py-8 text-center text-neutral-400">&copy; {new Date().getFullYear()} © 2026 IEF's EHoryzon. All Rights Reserved</footer>
     </div>
   );
 }

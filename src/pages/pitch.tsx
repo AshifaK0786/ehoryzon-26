@@ -1,4 +1,5 @@
-import { useMemo, useState, ChangeEvent, FormEvent } from "react";
+import React, { useMemo, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Upload } from "lucide-react";
 
@@ -112,7 +113,7 @@ export default function PitchRegister() {
       formData.append("team_name", teamName);
       formData.append("trl_level", String(trl));
       formData.append("theme", theme);
-      formData.append("abstract_pdf", abstractFile);
+      formData.append("abstract_pdf", abstractFile!);
       formData.append("members", JSON.stringify(members)); 
 
       // 🔁 Replace with your Django API
@@ -138,8 +139,8 @@ export default function PitchRegister() {
 }
       alert("Pitch registration submitted successfully!");
       navigate("/");
-    } catch (err) {
-      setError(err.message || "Something went wrong.");
+    } catch (err: unknown) {
+      setError((err as Error).message || "Something went wrong.");
     } finally {
       setSubmitting(false);
     }
