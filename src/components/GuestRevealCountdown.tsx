@@ -1,31 +1,36 @@
 import React, { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import praveensir from "../assets/praveensir.jpeg";
+
+interface Guest {
+  id: number;
+  name: string;
+  role: string;
+  image: string;
+}
 
 const GuestRevealCountdown = () => {
-  // ✅ MANUALLY CONTROL REVEAL HERE (0 to 12)
-  const revealedCount = 0; 
-
-  const guests = [
-    { id: 1, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-1.gif" },
-    { id: 2, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-2.gif" },
-    { id: 3, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-3.gif" },
-    { id: 4, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-4.gif" },
-    { id: 5, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-5.gif" },
-    { id: 6, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-6.gif" },
-    { id: 7, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-7.gif" },
-    { id: 8, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-8.gif" },
-    { id: 9, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-9.gif" },
-    { id: 10, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-10.gif" },
-    { id: 11, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-11.gif" },
-    { id: 12, name: "Mystery Guest", role: "Coming Soon", gif: "/assets/guests/guest-12.gif" },
+  const guests: Guest[] = [
+    { id: 1, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 2, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 3, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 4, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 5, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 6, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 7, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 8, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 9, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 10, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 11, name: "Mystery Guest", role: "Coming Soon", image: "" },
+    { id: 12, name: "Mystery Guest", role: "Coming Soon", image: "" },
   ];
 
   const [carouselIndex, setCarouselIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
 
-  const unlockedCards = Array.from({ length: revealedCount }, (_, i) => i + 1);
-  const isCardUnlocked = (cardId: number) => unlockedCards.includes(cardId);
+  const isCardUnlocked = (guest: Guest) => !!guest.image;
+  const revealedCount = guests.filter(isCardUnlocked).length;
 
   const handlePrevious = () => {
     setCarouselIndex(Math.max(0, carouselIndex - 1));
@@ -168,7 +173,7 @@ const GuestRevealCountdown = () => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {currentGuests.map((guest) => {
-                const unlocked = isCardUnlocked(guest.id);
+                const unlocked = isCardUnlocked(guest);
 
                 return (
                   <div key={guest.id} className="guest-card relative group cursor-pointer">
@@ -178,7 +183,7 @@ const GuestRevealCountdown = () => {
                         {unlocked ? (
                           <>
                             <img
-                              src={guest.gif}
+                              src={guest.image}
                               alt={guest.name}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                               onError={(e) => {

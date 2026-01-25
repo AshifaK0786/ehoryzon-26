@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import AnimatedBackground from "../components/AnimatedBackground";
 import herologo from "../assets/hero-logo.png";
@@ -16,23 +16,23 @@ interface GuestCard {
   status: "revealing-soon" | "revealed";
 }
 
-// List of 12 guests - all using praveensir.jpeg
+// List of 12 guests - using praveensir.jpeg as placeholder
 const guestsList: GuestCard[] = [
-  { id: 1, name: "Guest 1", image: praveensir, status: "revealed" },
-  { id: 2, name: "Guest 2", image: praveensir, status: "revealed" },
-  { id: 3, name: "Guest 3", image: praveensir, status: "revealed" },
-  { id: 4, name: "Guest 4", image: praveensir, status: "revealed" },
-  { id: 5, name: "Guest 5", image: praveensir, status: "revealed" },
-  { id: 6, name: "Guest 6", image: praveensir, status: "revealed" },
-  { id: 7, name: "Guest 7", image: praveensir, status: "revealed" },
-  { id: 8, name: "Guest 8", image: praveensir, status: "revealed" },
-  { id: 9, name: "Guest 9", image: praveensir, status: "revealed" },
-  { id: 10, name: "Guest 10", image: praveensir, status: "revealed" },
-  { id: 11, name: "Guest 11", image: praveensir, status: "revealed" },
-  { id: 12, name: "Guest 12", image: praveensir, status: "revealed" },
+  { id: 1, name: "Guest Speaker 1", image: praveensir, status: "revealed" },
+  { id: 2, name: "Guest Speaker 2", image: praveensir, status: "revealed" },
+  { id: 3, name: "Guest Speaker 3", image: praveensir, status: "revealed" },
+  { id: 4, name: "Guest Speaker 4", image: praveensir, status: "revealed" },
+  { id: 5, name: "Guest Speaker 5", image: praveensir, status: "revealed" },
+  { id: 6, name: "Guest Speaker 6", image: praveensir, status: "revealed" },
+  { id: 7, name: "Guest Speaker 7", image: praveensir, status: "revealed" },
+  { id: 8, name: "Guest Speaker 8", image: praveensir, status: "revealed" },
+  { id: 9, name: "Guest Speaker 9", image: praveensir, status: "revealed" },
+  { id: 10, name: "Guest Speaker 10", image: praveensir, status: "revealed" },
+  { id: 11, name: "Guest Speaker 11", image: praveensir, status: "revealed" },
+  { id: 12, name: "Guest Speaker 12", image: praveensir, status: "revealed" },
 ];
 
-function GuestCard({ guest, index }: { guest: GuestCard; index: number }) {
+function GuestCard({ guest }: { guest: GuestCard }) {
   const [imageError, setImageError] = useState(false);
 
   // Use the image from guest object
@@ -40,12 +40,12 @@ function GuestCard({ guest, index }: { guest: GuestCard; index: number }) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative mb-6 w-64 h-64 rounded-2xl overflow-hidden border border-yellow-600/30 bg-black flex items-center justify-center">
+      <div className="relative mb-6 w-56 h-56 md:w-64 md:h-64 rounded-2xl overflow-hidden border-2 border-yellow-600/50 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center shadow-lg hover:shadow-yellow-500/20 transition-all">
         {!imageError ? (
           <img
             src={imagePath}
             alt={guest.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             onError={() => setImageError(true)}
           />
         ) : null}
@@ -53,7 +53,7 @@ function GuestCard({ guest, index }: { guest: GuestCard; index: number }) {
         {imageError && (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-black">
             <svg
-              className="w-16 h-16 text-yellow-300/40 mb-3"
+              className="w-20 h-20 text-yellow-400/50 mb-3"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -61,19 +61,19 @@ function GuestCard({ guest, index }: { guest: GuestCard; index: number }) {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                strokeWidth={1.5}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
               />
             </svg>
-            <p className="text-yellow-300/60 text-sm font-semibold">REVEALING SOON</p>
+            <p className="text-yellow-300/70 text-sm font-semibold">REVEALING SOON</p>
           </div>
         )}
       </div>
       
       <div className="text-center">
-        <h3 className="text-xl font-bold text-white mb-1">{guest.name}</h3>
-        <p className="text-yellow-300/70 text-sm">
-          {imageError ? "Coming Soon" : "Revealed"}
+        <h3 className="text-lg md:text-xl font-bold text-white mb-1">{guest.name}</h3>
+        <p className="text-yellow-300/60 text-xs md:text-sm font-medium">
+          {!imageError ? "Distinguished Speaker" : "Coming Soon"}
         </p>
       </div>
     </div>

@@ -1,6 +1,14 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Upload } from "lucide-react";
+
+interface TeamMember {
+  name: string;
+  email: string;
+  phone: string;
+  college: string;
+  year: string;
+}
 
 const TRL_OPTIONS = [3, 4, 5, 6, 7, 8, 9];
 
@@ -13,7 +21,7 @@ const THEME_OPTIONS = [
   { value: "Open Innovation", label: "Open Innovation" },
 ];
 
-const emptyMember = () => ({
+const emptyMember = (): TeamMember => ({
   name: "",
   email: "",
   phone: "",
@@ -27,10 +35,10 @@ export default function PitchRegister() {
   const [teamName, setTeamName] = useState("");
   const [trl, setTrl] = useState(3);
   const [theme, setTheme] = useState(THEME_OPTIONS[0].value);
-  const [abstractFile, setAbstractFile] = useState(null);
+  const [abstractFile, setAbstractFile] = useState<File | null>(null);
 
   // ✅ start with min 2
-  const [members, setMembers] = useState([emptyMember(), emptyMember()]);
+  const [members, setMembers] = useState<TeamMember[]>([emptyMember(), emptyMember()]);
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -43,7 +51,7 @@ export default function PitchRegister() {
     return abstractFile.name;
   }, [abstractFile]);
 
-  const updateMember = (idx, key, value) => {
+  const updateMember = (idx: number, key: keyof TeamMember, value: string) => {
     setMembers((prev) => {
       const copy = [...prev];
       copy[idx] = { ...copy[idx], [key]: value };
@@ -56,7 +64,7 @@ export default function PitchRegister() {
     setMembers((prev) => [...prev, emptyMember()]);
   };
 
-  const removeMember = (idx) => {
+  const removeMember = (idx: number) => {
     if (!canRemove) return;
     setMembers((prev) => prev.filter((_, i) => i !== idx));
   };
@@ -86,7 +94,7 @@ export default function PitchRegister() {
     return "";
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
 

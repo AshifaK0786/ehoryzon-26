@@ -1,8 +1,79 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+// Neon light particle system
+class NeonParticle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  opacity: number;
+  maxOpacity: number;
+  pulsePhase: number;
+  pulseSpeed: number;
+
+  constructor(width: number, height: number) {
+    this.x = Math.random() * width;
+    this.y = Math.random() * height;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.2;
+    this.radius = Math.random() * 1.5 + 0.5;
+    this.maxOpacity = Math.random() * 0.6 + 0.2;
+    this.opacity = this.maxOpacity;
+    this.pulsePhase = Math.random() * Math.PI * 2;
+    this.pulseSpeed = Math.random() * 0.02 + 0.01;
+  }
+
+  update(mouseX: number, mouseY: number, width: number, height: number) {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Subtle mouse attraction
+    const dx = this.x - mouseX;
+    const dy = this.y - mouseY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance < 200) {
+      const angle = Math.atan2(dy, dx);
+      this.vx += Math.cos(angle) * 0.015;
+      this.vy += Math.sin(angle) * 0.015;
+    }
+
+    // Bounce off edges
+    if (this.x < 0 || this.x > width) this.vx *= -0.8;
+    if (this.y < 0 || this.y > height) this.vy *= -0.8;
+
+    // Damping
+    this.vx *= 0.98;
+    this.vy *= 0.98;
+
+    // Keep within bounds
+    this.x = Math.max(0, Math.min(width, this.x));
+    this.y = Math.max(0, Math.min(height, this.y));
+
+    // Pulsing opacity
+    this.pulsePhase += this.pulseSpeed;
+    this.opacity = this.maxOpacity * (0.5 + 0.5 * Math.sin(this.pulsePhase));
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    // Yellow/gold neon glow
+    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Outer glow
+    ctx.strokeStyle = `rgba(255, 200, 0, ${this.opacity * 0.4})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius + 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
 
 export default function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const mousePosRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,78 +90,7 @@ export default function AnimatedBackground() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Neon light particle system
-    class NeonParticle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      opacity: number;
-      maxOpacity: number;
-      pulsePhase: number;
-      pulseSpeed: number;
-
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.2;
-        this.radius = Math.random() * 1.5 + 0.5;
-        this.maxOpacity = Math.random() * 0.6 + 0.2;
-        this.opacity = this.maxOpacity;
-        this.pulsePhase = Math.random() * Math.PI * 2;
-        this.pulseSpeed = Math.random() * 0.02 + 0.01;
-      }
-
-      update(mouseX: number, mouseY: number) {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Subtle mouse attraction
-        const dx = this.x - mouseX;
-        const dy = this.y - mouseY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 200) {
-          const angle = Math.atan2(dy, dx);
-          this.vx += Math.cos(angle) * 0.015;
-          this.vy += Math.sin(angle) * 0.015;
-        }
-
-        // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -0.8;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -0.8;
-
-        // Damping
-        this.vx *= 0.98;
-        this.vy *= 0.98;
-
-        // Keep within bounds
-        this.x = Math.max(0, Math.min(canvas.width, this.x));
-        this.y = Math.max(0, Math.min(canvas.height, this.y));
-
-        // Pulsing opacity
-        this.pulsePhase += this.pulseSpeed;
-        this.opacity = this.maxOpacity * (0.5 + 0.5 * Math.sin(this.pulsePhase));
-      }
-
-      draw(ctx: CanvasRenderingContext2D) {
-        // Yellow/gold neon glow
-        ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Outer glow
-        ctx.strokeStyle = `rgba(255, 200, 0, ${this.opacity * 0.4})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius + 1.5, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-    }
-
-    const particles: NeonParticle[] = Array.from({ length: 120 }, () => new NeonParticle());
+    const particles: NeonParticle[] = Array.from({ length: 120 }, () => new NeonParticle(canvas.width, canvas.height));
     let animationId: number;
     let time = 0;
 
@@ -167,7 +167,7 @@ export default function AnimatedBackground() {
 
       // Update and draw neon particles
       particles.forEach((particle) => {
-        particle.update(mousePos.x, mousePos.y);
+        particle.update(mousePosRef.current.x, mousePosRef.current.y, canvas.width, canvas.height);
         particle.draw(ctx);
       });
 
@@ -194,7 +194,7 @@ export default function AnimatedBackground() {
 
     // Mouse tracking
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mousePosRef.current = { x: e.clientX, y: e.clientY };
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -204,7 +204,7 @@ export default function AnimatedBackground() {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [mousePos]);
+  }, []);
 
   return (
     <canvas

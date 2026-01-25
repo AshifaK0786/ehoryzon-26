@@ -54,7 +54,7 @@ export default function Schedule() {
           className="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition mb-8 group"
         >
           <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-          Back to E-Horizon
+          Back to E-Horyzon
         </button>
 
         <h1 className="text-4xl md:text-6xl font-black mb-4">

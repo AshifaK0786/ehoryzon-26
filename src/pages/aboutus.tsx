@@ -19,25 +19,21 @@ const staffData = [
     img: parameshwaransir,
     name: "Mr E R K Krishnan",
     role: "Correspondent @KEC",
-    desc: "Leads the incubation cell with focus on industry partnerships and research commercialization.",
   },
   {
     img: parameshwaransir,
     name: "Dr.R .Parameshwaran",
     role: "Principal",
-    desc: "Oversees student initiatives and mentors startup teams.",
   },
   {
     img: kannansir,
     name: "Mr.P.S.Kannan",
     role: "Executive Director @KonguTBI",
-    desc: "Manages funds and sponsorships for incubation programmes.",
   },
   {
     img: praveensir,
     name: "Dr.Praveen Kumar Subramanian",
     role: "president @KonguTBI",
-    desc: "Provides academic guidance and facilitates collaborations.",
   },
 ];
 
@@ -156,13 +152,12 @@ const teamMembers = [
 
 function LogoMarquee() {
   return (
-    <div className="absolute top-0 left-0 right-0 z-20 py-4 border-b border-white/5">
+    <div className="absolute top-0 left-0 right-0 z-20 py-2 md:py-4 border-b border-white/5">
       <div className="relative">
-        <div className="flex gap-60
-         items-center justify-center px-6">
+        <div className="flex gap-4 sm:gap-8 md:gap-20 lg:gap-60 items-center justify-center px-2 md:px-6">
           {logos.map((src, i) => (
             <div key={i} className="flex items-center justify-center">
-              <img src={src} alt={`logo-${i}`} className="h-12 w-auto opacity-95 object-contain" onError={(e)=> (e.currentTarget.style.display='none')} />
+              <img src={src} alt={`logo-${i}`} className="h-5 sm:h-6 md:h-10 lg:h-12 w-auto opacity-95 object-contain" onError={(e)=> (e.currentTarget.style.display='none')} />
             </div>
           ))}
         </div>
@@ -198,7 +193,7 @@ function HeroSection() {
   return (
     <section
       ref={ref}
-      className={`py-16 text-center px-6 transition-all duration-700 ease-out ${
+      className={`py-8 md:py-16 text-center px-4 md:px-6 transition-all duration-700 ease-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
       style={{
@@ -207,8 +202,8 @@ function HeroSection() {
         transitionTimingFunction: "ease-out",
       }}
     >
-      <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">About the Incubation & Innovation Cell</h1>
-      <p className="max-w-3xl mx-auto text-neutral-300 text-lg md:text-xl opacity-90">
+      <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold mb-3 md:mb-4 tracking-tight">About the Incubation & Innovation Cell</h1>
+      <p className="max-w-3xl mx-auto text-neutral-300 text-sm md:text-lg lg:text-xl opacity-90">
         Our incubation cell empowers students and faculty to transform ideas into impactful ventures. We
         foster innovation through mentorship, funding support, and industry collaborations.
       </p>
@@ -258,15 +253,15 @@ function VideoSection() {
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      <div className="relative z-10 px-6 py-16 max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Our Ecosystem</h2>
+      <div className="relative z-10 px-4 md:px-6 py-8 md:py-16 max-w-7xl mx-auto">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 md:mb-12 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Our Ecosystem</h2>
         
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-12">
           {/* IEF@KEC */}
 
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>About IEF@KEC</h3>
-            <p className="text-white text-lg mb-4 transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>About IEF@KEC</h3>
+            <p className="text-white text-sm md:text-base lg:text-lg mb-3 md:mb-4 transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
               The KEC Innovation and Entrepreneurship Forum (IEF@KEC) is the unified innovation and entrepreneurship ecosystem of Kongu Engineering College. It brings together institutional and national initiatives to nurture creativity, innovation, and startup culture among students and faculty.
             </p>
             <p className="text-white text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
@@ -276,24 +271,24 @@ function VideoSection() {
 
           {/* EMDC */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Entrepreneurship and Management Development Centre (EMDC)</h3>
-            <p className="text-white text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Entrepreneurship and Management Development Centre (EMDC)</h3>
+            <p className="text-white text-sm md:text-base lg:text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
               Established in 1993 with Central Government support, EMDC promotes entrepreneurship as a viable career option. It creates awareness, provides pre-incubation support, and helps students and innovators transform ideas into campus startups and new ventures.
             </p>
           </div>
 
           {/* IIC@KEC */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Institution's Innovation Council (IIC@KEC)</h3>
-            <p className="text-white text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Institution's Innovation Council (IIC@KEC)</h3>
+            <p className="text-white text-sm md:text-base lg:text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
               Established in 2018–19 under the guidance of the MoE Innovation Cell, IIC@KEC drives innovation-led activities as per the national calendar. It organizes workshops, hackathons, idea competitions, prototype expos, and industry interactions to strengthen the innovation ecosystem.
             </p>
           </div>
 
           {/* TBI@KEC */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Technology Business Incubator (TBI@KEC)</h3>
-            <p className="text-white text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>Technology Business Incubator (TBI@KEC)</h3>
+            <p className="text-white text-sm md:text-base lg:text-lg transition-colors cursor-pointer" onMouseEnter={(e) => e.currentTarget.style.color = "#ac791b"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}>
               Established in 2003 with support from Department of Science and Technology, TBI@KEC provides end-to-end support from concept to commercialization. With world-class infrastructure, mentoring, funding assistance, and investor networking, it focuses on nurturing technology-based startups, especially in Electronics and ICT.
             </p>
           </div>
@@ -330,7 +325,7 @@ function StaffSection() {
   return (
     <section
       ref={ref}
-      className={`py-6 px-6 max-w-6xl mx-auto transition-all duration-700 ease-out ${
+      className={`py-8 px-4 md:px-6 max-w-6xl mx-auto transition-all duration-700 ease-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
       style={{
@@ -339,36 +334,34 @@ function StaffSection() {
         transitionTimingFunction: "ease-out",
       }}
     >
-      <h3 className="text-3xl font-bold text-center mb-8">Head Staff</h3>
-      <div className="space-y-10">
+      <h3 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-8">Head Staff</h3>
+      <div className="space-y-4 md:space-y-10">
         {staffData.map((s, i) => (
-          <div key={i} className="grid gap-6 items-center md:grid-cols-2">
+          <div key={i} className="grid gap-3 md:gap-6 items-center grid-cols-1 md:grid-cols-2">
             {i % 2 === 0 ? (
               <>
                 <div className="flex justify-center md:justify-start">
-                  <div className="w-56 h-56 rounded-full overflow-hidden shadow-lg">
+                  <div className="w-24 h-24 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg flex-shrink-0">
                     <img src={s.img} alt={s.name} className="w-full h-full object-cover" onError={(e)=> (e.currentTarget.style.display='none')} />
                   </div>
                 </div>
                 <div>
-                  <div className="p-6 rounded-xl bg-white/3 border border-white/6 shadow-inner">
-                    <h4 className="text-2xl font-semibold">{s.name}</h4>
-                    <div className="text-yellow-300 font-medium my-1">{s.role}</div>
-                    <p className="text-neutral-300">{s.desc}</p>
+                  <div className="p-3 md:p-6 rounded-xl bg-white/3 border border-white/6 shadow-inner text-center md:text-left">
+                    <h4 className="text-base md:text-2xl font-semibold">{s.name}</h4>
+                    <div className="text-yellow-300 font-medium my-0.5 text-xs md:text-base">{s.role}</div>
                   </div>
                 </div>
               </>
             ) : (
               <>
                 <div>
-                  <div className="p-6 rounded-xl bg-white/3 border border-white/6 shadow-inner">
-                    <h4 className="text-2xl font-semibold">{s.name}</h4>
-                    <div className="text-yellow-300 font-medium my-1">{s.role}</div>
-                    <p className="text-neutral-300">{s.desc}</p>
+                  <div className="p-3 md:p-6 rounded-xl bg-white/3 border border-white/6 shadow-inner text-center md:text-left">
+                    <h4 className="text-base md:text-2xl font-semibold">{s.name}</h4>
+                    <div className="text-yellow-300 font-medium my-0.5 text-xs md:text-base">{s.role}</div>
                   </div>
                 </div>
                 <div className="flex justify-center md:justify-end">
-                  <div className="w-56 h-56 rounded-full overflow-hidden shadow-lg">
+                  <div className="w-24 h-24 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg flex-shrink-0">
                     <img src={s.img} alt={s.name} className="w-full h-full object-cover" onError={(e)=> (e.currentTarget.style.display='none')} />
                   </div>
                 </div>
@@ -444,7 +437,7 @@ function ContentBlock({ title, text }: { title: string; text: string }) {
       <h3 className="text-2xl md:text-3xl font-bold text-yellow-300 mb-3">
         {title}
       </h3>
-      <p className="text-base md:text-lg leading-relaxed text-yellow-200 whitespace-pre-wrap">
+      <p className="text-sm md:text-base lg:text-lg leading-relaxed text-yellow-200 whitespace-pre-wrap">
         {text}
       </p>
     </div>
@@ -506,7 +499,7 @@ function TeamMembersCarousel() {
     return () => observer.disconnect();
   }, []);
 
-  // Auto-advance carousel every 2 seconds
+  // Auto-advance carousel every 2 seconds (desktop only)
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % teamMembers.length);
@@ -541,6 +534,86 @@ function TeamMembersCarousel() {
 
   const visibleMembers = getVisibleMembers();
 
+  interface TeamMember {
+    name: string;
+    photo?: string;
+    linkedin?: string;
+    whatsapp?: string;
+  }
+
+  // Member card component
+  const MemberCard = ({ member, isCenter = false }: { member: TeamMember; isCenter?: boolean }) => (
+    <div className="flex flex-col items-center">
+      {/* Photo Card */}
+      <div className="relative mb-4 md:mb-6">
+        <div className={`rounded-2xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-900 shadow-xl aspect-square flex items-center justify-center ${
+          isCenter ? "w-48 h-48 md:w-64 md:h-64" : "w-40 h-40 md:w-48 md:h-48"
+        }`}>
+          {member.photo ? (
+            <img
+              src={member.photo}
+              alt={member.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-400">
+              <svg
+                className="w-16 h-16 md:w-24 md:h-24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Member Details Card */}
+      <div
+        className={`bg-white/3 border border-white/10 rounded-xl p-4 md:p-6 text-center backdrop-blur-sm transition-all ${
+          isCenter ? "w-64 md:w-72" : "w-48 md:w-56"
+        }`}
+      >
+        <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">{member.name}</h3>
+
+        {/* Social Links */}
+        <div className="flex justify-center gap-2 md:gap-3">
+          <a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors"
+            title="LinkedIn"
+          >
+            <svg
+              className="w-4 h-4 md:w-5 md:h-5 text-white hover:text-black"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.469v6.766z" />
+            </svg>
+          </a>
+          <a
+            href={member.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors"
+            title="WhatsApp"
+          >
+            <svg
+              className="w-4 h-4 md:w-5 md:h-5 text-white hover:text-black"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <section
       id="our-team"
@@ -554,9 +627,19 @@ function TeamMembersCarousel() {
         transitionTimingFunction: "ease-out",
       }}
     >
-      <h2 className="text-4xl font-bold text-center mb-12">Our Team</h2>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-12">Our Team</h2>
 
-      <div className="relative">
+      {/* Mobile Grid View */}
+      <div className="block md:hidden">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4">
+          {teamMembers.map((member) => (
+            <MemberCard key={member.id} member={member} isCenter={false} />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Carousel View */}
+      <div className="hidden md:block relative">
         {/* Carousel Container */}
         <div className="flex items-center justify-center gap-4 mb-12 min-h-[500px]">
           {visibleMembers.map((member) => (
@@ -570,71 +653,7 @@ function TeamMembersCarousel() {
                   : "scale-50 opacity-0 hidden"
               }`}
             >
-              {/* Photo Card */}
-              <div className="relative mb-6">
-                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-900 shadow-xl aspect-square flex items-center justify-center w-64 h-64">
-                  {member.photo ? (
-                    <img
-                      src={member.photo}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-400">
-                      <svg
-                        className="w-24 h-24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Member Details Card */}
-              <div
-                className={`bg-white/3 border border-white/10 rounded-xl p-6 text-center backdrop-blur-sm transition-all ${
-                  member.position === 0 ? "w-72" : "w-56"
-                }`}
-              >
-                <h3 className="text-xl font-bold mb-4">{member.name}</h3>
-
-                {/* Social Links */}
-                <div className="flex justify-center gap-3">
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors"
-                    title="LinkedIn"
-                  >
-                    <svg
-                      className="w-5 h-5 text-white hover:text-black"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.469v6.766z" />
-                    </svg>
-                  </a>
-                  <a
-                    href={member.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-gray-700 hover:bg-yellow-300 flex items-center justify-center transition-colors"
-                    title="WhatsApp"
-                  >
-                    <svg
-                      className="w-5 h-5 text-white hover:text-black"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+              <MemberCard member={member} isCenter={member.position === 0} />
             </div>
           ))}
         </div>
@@ -802,9 +821,9 @@ export default function AboutUs() {
       {/* Student Coordinators section removed per request */}
 
       {/* Highlights Carousel */}
-      <div className="px-6 py-16 max-w-7xl mx-auto">
-        <div className="flex items-end justify-between mb-6">
-          <h3 className="text-2xl md:text-3xl font-black text-white">
+      <div className="px-4 md:px-6 py-8 md:py-16 max-w-7xl mx-auto">
+        <div className="flex items-end justify-between mb-4 md:mb-6">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white">
             Highlights Carousel
           </h3>
         </div>

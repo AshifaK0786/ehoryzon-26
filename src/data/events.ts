@@ -14,8 +14,10 @@ import financeImg from "../assets/workshop-finance.png";
 import iprImg from "../assets/workshop ipr & ip management.png";
 import startupLegalEthicalImg from "../assets/workshop startup,ethical.png";
 import detxImg from "../assets/DetxForum.png";
+import type { Event } from "../types";
+
 // ✅ INTRA COLLEGE EVENTS (in order: Mech Arena, Electric Odyssey, Game-a-thon, Webify, Buildscape, Ethical Hacker)
-export const intraeventList = [
+export const intraeventList: Event[] = [
   {
     slug: "mecharena",
     title: "Mech Arena",
@@ -128,7 +130,7 @@ export const intraeventList = [
 ];
 
 // ✅ INTER COLLEGE EVENTS (in order: IPL Auction, Stocks and Shares, Master Chef Mania, B-Plan, DETx Forum)
-export const interEventList = [
+export const interEventList: Event[] = [
   {
     slug: "ipl-auction",
     title: "IPL Auction",
@@ -166,11 +168,11 @@ export const interEventList = [
       "Learn real-world finance concepts while competing against peers.",
       "Experience the thrill of investment strategy and market dynamics.",
     ],
-    guidelinesFile: "STOCKS.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
   {
@@ -198,7 +200,7 @@ export const interEventList = [
     slug: "b-plan",
     title: "B-Plan",
     date: "March 5",
-    image: detxImg,
+    image: bplanImg,
     registerUrl: "/register/b-plan",
     qrImage: "/assets/qr/common-qr.png",
     maxTeamMembers: 1,
@@ -209,18 +211,18 @@ export const interEventList = [
       "Compete against other teams and get evaluated by industry experts.",
       "Win prizes and recognition for your entrepreneurial vision.",
     ],
-    guidelinesFile: "B-PLAN.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+    
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
   {
     slug: "detx-forum",
     title: "DETx Forum",
     date: "March 5",
-    image: bplanImg, // Using B-Plan image for now
+    image: detxImg, // Using B-Plan image for now
     registerUrl: "/register/detx-forum",
     qrImage: "/assets/qr/common-qr.png",
     maxTeamMembers: 1,
@@ -231,17 +233,17 @@ export const interEventList = [
       "Compete against other teams and get evaluated by industry experts.",
       "Win prizes and recognition for your entrepreneurial vision.",
     ],
-    guidelinesFile: "DETX.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
 ];
 
 // ✅ WORKSHOPS / TALENTIA (in order: Product-Market Fit, Business Market Fit, Rising Capital & Finance Management, IPR & IP Management, Startup Legal & Ethical Steps)
-export const workshopList = [
+export const workshopList: Event[] = [
   {
     slug: "product-market-fit",
     title: "Product-Market Fit",
@@ -257,11 +259,11 @@ export const workshopList = [
       "Interactive sessions on product development strategy and market positioning.",
       "Practical frameworks and tools for scaling your business.",
     ],
-    guidelinesFile: "PRODUCT-MARKET-FIT.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+    
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
   {
@@ -279,11 +281,11 @@ export const workshopList = [
       "Expert insights on market research and competitive analysis.",
       "Case studies and real-world applications for business success.",
     ],
-    guidelinesFile: "BUSINESS-MARKET-FIT.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+    
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
   {
@@ -301,11 +303,11 @@ export const workshopList = [
       "Workshop on financial planning, cash flow management, and investor relations.",
       "Build your investor pitch and understand due diligence process.",
     ],
-    guidelinesFile: "FINANCE-MANAGEMENT.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+   
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
   {
@@ -323,11 +325,11 @@ export const workshopList = [
       "Workshop on IP strategy and protecting your innovations.",
       "Legal frameworks and best practices for startups.",
     ],
-    guidelinesFile: "IPR-MANAGEMENT.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+    
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
   {
@@ -345,17 +347,17 @@ export const workshopList = [
       "Workshop on contracts, agreements, and risk management.",
       "Ethical business practices and corporate governance for sustainable growth.",
     ],
-    guidelinesFile: "LEGAL-ETHICAL.pdf",
-    contactLeft: "+919943633033",
-    contactRight: "+919363225854",
-    contactLeftName: "DANAJAII G A",
-    contactRightName: "ANUSH S",
+    
+    contactLeft: "+916383828539",
+    contactRight: "+919566971605",
+    contactLeftName: "G HariHaran",
+    contactRightName: "P Santhosh",
     whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
   },
 ];
 
 // ✅ PERFORMING ARTS / FILMS (Thirai Trivia)
-export const performingArtsList = [
+export const performingArtsList: Event[] = [
   {
     slug: "thirai-trivia",
     title: "திரை-Trivia",
@@ -380,7 +382,7 @@ export const performingArtsList = [
 ];
 
 // ✅ Backward compatibility - all events combined
-export const events = [
+export const events: Event[] = [
   ...intraeventList,
   ...interEventList,
   ...workshopList,

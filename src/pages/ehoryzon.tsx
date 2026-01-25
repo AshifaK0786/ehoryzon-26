@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Menu,
   X,
@@ -7,8 +7,6 @@ import {
   Calendar,
   Clock,
   MapPin,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +20,7 @@ import iic from "../assets/IIC_Logo_Transparent.png"
 
 import events from "../data/events";
 import { intraeventList, interEventList, workshopList, performingArtsList } from "../data/events";
+import type { Event } from "../types";
 import EventCountdownPortal from "../components/EventCountdownPortal";
 import GuestRevealCountdown from "../components/GuestRevealCountdown";
 import AnimatedBackground from "../components/AnimatedBackground";
@@ -34,220 +33,27 @@ import pitchVideo from "../assets/pitch.mp4";
 /* -----------------------
    Helpers
 ------------------------ */
-const rand = (min, max) => Math.random() * (max - min) + min;
-const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 
 
-function buildAcrossBolt() {
-  let x = rand(0, 10);
-  let y = rand(35, 55);
-  const points = [[x, y]];
-
-  const segments = Math.floor(rand(9, 14));
-  for (let i = 0; i < segments; i++) {
-    x = clamp(x + rand(8, 15), 0, 100);
-    y = clamp(y + rand(-11, 11), 10, 90);
-    points.push([x, y]);
-    if (x > 98) break;
-  }
-
-  const toD = (pts) =>
-    pts
-      .map((p, idx) =>
-        idx === 0
-          ? `M ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
-          : `L ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
-      )
-      .join(" ");
-
-  const main = toD(points);
-
-  const branches = [];
-  if (Math.random() < 0.85 && points.length > 6) {
-    const branchCount = Math.floor(rand(1, 3));
-    for (let b = 0; b < branchCount; b++) {
-      const startIndex = Math.floor(rand(2, points.length - 3));
-      let [bx, by] = points[startIndex];
-      const bPts = [[bx, by]];
-      const bSeg = Math.floor(rand(3, 6));
-      for (let j = 0; j < bSeg; j++) {
-        bx = clamp(bx + rand(-14, 14), 0, 100);
-        by = clamp(by + rand(-10, 14), 0, 100);
-        bPts.push([bx, by]);
-      }
-      branches.push(toD(bPts));
-    }
-  }
-
-  return { main, branches };
-}
-
-function generateStrikeBolts() {
-  const bolts = [];
-  bolts.push({ ...buildAcrossBolt(), width: rand(3.0, 4.8) });
-  if (Math.random() < 0.55)
-    bolts.push({ ...buildAcrossBolt(), width: rand(2.0, 3.6) });
-  return bolts;
-}
-
-/* -----------------------
-   Lightning Overlay (on top of video)
------------------------- */
-function ThunderOverlay({ onStrike }) {
-  const [strike, setStrike] = useState({ id: 0, bolts: [] });
-  const timersRef = useRef([]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const clearAll = () => {
-      timersRef.current.forEach((t) => clearTimeout(t));
-      timersRef.current = [];
-    };
-
-    const schedule = () => {
-      const delay = Math.floor(rand(2600, 8600));
-      const t = setTimeout(() => {
-        if (cancelled) return;
-
-        setStrike((prev) => ({
-          id: prev.id + 1,
-          bolts: generateStrikeBolts(),
-        }));
-
-        onStrike?.();
-        schedule();
-      }, delay);
-
-      timersRef.current.push(t);
-    };
-
-    schedule();
-    return () => {
-      cancelled = true;
-      clearAll();
-    };
-  }, [onStrike]);
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div key={`flash-${strike.id}`} className="absolute inset-0 strike-flash" />
-
-      <svg
-        key={`bolt-${strike.id}`}
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="goldBolt" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#FFF6CC" />
-            <stop offset="0.35" stopColor="#FCD34D" />
-            <stop offset="0.6" stopColor="#FBBF24" />
-            <stop offset="1" stopColor="#D97706" />
-          </linearGradient>
-        </defs>
-
-        {strike.bolts.map((b, idx) => (
-          <g key={`${strike.id}-${idx}`}>
-            <path
-              d={b.main}
-              className="strike-bolt"
-              style={{ strokeWidth: b.width, animationDelay: `${idx * 70}ms` }}
-              stroke="url(#goldBolt)"
-              vectorEffect="non-scaling-stroke"
-            />
-            {b.branches.map((bd, j) => (
-              <path
-                key={`${strike.id}-${idx}-br-${j}`}
-                d={bd}
-                className="strike-branch"
-                style={{ animationDelay: `${idx * 70 + 90}ms` }}
-                stroke="url(#goldBolt)"
-                vectorEffect="non-scaling-stroke"
-              />
-            ))}
-          </g>
-        ))}
-      </svg>
-    </div>
-  );
-}
-
-/* -----------------------
-   Carousel
------------------------- */
-function PosterCarousel({ images = [] }) {
-  const scrollerRef = useRef(null);
-
-  const scrollByCard = (dir) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 360, behavior: "smooth" });
-  };
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => scrollByCard(-1)}
-        className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full border border-yellow-600/30 bg-black/40 backdrop-blur-md text-yellow-400 hover:bg-yellow-500/10 transition"
-        aria-label="Scroll left"
-      >
-        <ChevronLeft size={18} />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => scrollByCard(1)}
-        className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full border border-yellow-600/30 bg-black/40 backdrop-blur-md text-yellow-400 hover:bg-yellow-500/10 transition"
-        aria-label="Scroll right"
-      >
-        <ChevronRight size={18} />
-      </button>
-
-      <div
-        ref={scrollerRef}
-        className="no-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory"
-      >
-        <div className="flex gap-6 pr-[120px]">
-          {images.map((src, i) => (
-            <div
-            
-              key={i}
-              className="snap-start shrink-0 w-[260px] sm:w-[320px] md:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden border border-yellow-600/20 bg-black relative"
-            >
-              <img
-                src={src}
-                alt={`carousel-${i}`}
-                className="relative z-10 w-full h-full object-cover"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* -----------------------
-   Main
------------------------- */
-export default function EHorizon() {
+export default function EHoryzonPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [navCompact, setNavCompact] = useState(false);
   const navigate = useNavigate();
   const [strikeGlow, setStrikeGlow] = useState(false);
-  const strikeTimerRef = useRef(null);
-
-  const handleStrike = useCallback(() => {
-    setStrikeGlow(true);
-    if (strikeTimerRef.current) clearTimeout(strikeTimerRef.current);
-    strikeTimerRef.current = setTimeout(() => setStrikeGlow(false), 900);
-  }, []);
+  const strikeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    const schedule = () => {
+      const delay = Math.floor(rand(2600, 8600));
+      strikeTimerRef.current = setTimeout(() => {
+        setStrikeGlow(true);
+        setTimeout(() => setStrikeGlow(false), 900);
+        schedule();
+      }, delay);
+    };
+
+    schedule();
     return () => {
       if (strikeTimerRef.current) clearTimeout(strikeTimerRef.current);
     };
@@ -260,12 +66,12 @@ export default function EHorizon() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToSection = (id) => {
+  const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   // ✅ redirect helper
-  const goToRegister = (url) => {
+  const goToRegister = (url: string) => {
     // use react-router navigation so we stay within the SPA
     navigate(url);
   };
@@ -284,21 +90,14 @@ export default function EHorizon() {
   // ✅ 10 standard events (each has Register) - loaded from `src/data/events`
   // `events` is imported above
 
-  const highlightCarousel = [
-    "/assets/highlights/h1.jpg",
-    "/assets/highlights/h2.jpg",
-    "/assets/highlights/h3.jpg",
-    "/assets/highlights/last-event.jpg",
-  ];
-
   const [visibleCards, setVisibleCards] = useState(() => new Set<number>());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Get unique dates from all events
   const uniqueDates = useMemo(() => {
-    const dates = new Set(events.map((e: any) => e.date).filter(Boolean));
-    return Array.from(dates).sort();
+    const dates = new Set(events.map((e: Event) => e.date).filter(Boolean));
+    return Array.from(dates).sort() as string[];
   }, []);
 
   useEffect(() => {

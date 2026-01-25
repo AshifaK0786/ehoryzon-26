@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 const EventCountdownPortal = () => {
-  const eventStartDate = new Date("2026-03-02");
+  const eventStartDate = useMemo(() => new Date("2026-03-02"), []);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [timeRemaining, setTimeRemaining] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
 
   // Update timer every second
   useEffect(() => {
@@ -19,13 +13,11 @@ const EventCountdownPortal = () => {
   }, []);
 
   // Calculate time remaining
-  useEffect(() => {
-    const now = new Date(currentTime);
-    const diff = eventStartDate.getTime() - now.getTime();
+  const timeRemaining = useMemo(() => {
+    const diff = eventStartDate.getTime() - currentTime.getTime();
 
     if (diff <= 0) {
-      setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      return;
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -33,8 +25,8 @@ const EventCountdownPortal = () => {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    setTimeRemaining({ days, hours, minutes, seconds });
-  }, [currentTime]);
+    return { days, hours, minutes, seconds };
+  }, [currentTime, eventStartDate]);
 
   return (
     <div className="w-full bg-transparent py-32 px-6 border-t border-yellow-600/20">
@@ -99,45 +91,45 @@ const EventCountdownPortal = () => {
         </div>
 
         {/* Main Timer */}
-        <div className="timer-container rounded-3xl border-4 border-yellow-400 bg-gradient-to-br from-black via-black to-black/90 p-10 md:p-16 w-full max-w-3xl backdrop-blur-xl">
+        <div className="timer-container rounded-3xl border-4 border-yellow-400 bg-gradient-to-br from-black via-black to-black/90 p-6 md:p-16 w-full max-w-3xl backdrop-blur-xl">
           {/* Timer Grid */}
-          <div className="grid grid-cols-4 gap-4 md:gap-8 mb-8">
+          <div className="grid grid-cols-4 gap-2 md:gap-8 mb-8">
             {/* Days */}
             <div className="flex flex-col items-center">
-              <div className="timer-digit text-5xl md:text-7xl text-yellow-400 leading-none">
+              <div className="timer-digit text-3xl sm:text-5xl md:text-7xl text-yellow-400 leading-none">
                 {String(timeRemaining.days).padStart(2, "0")}
               </div>
-              <div className="timer-label text-yellow-600 text-sm md:text-base mt-4">
+              <div className="timer-label text-yellow-600 text-xs md:text-base mt-4">
                 Days
               </div>
             </div>
 
             {/* Hours */}
             <div className="flex flex-col items-center">
-              <div className="timer-digit text-5xl md:text-7xl text-yellow-400 leading-none">
+              <div className="timer-digit text-3xl sm:text-5xl md:text-7xl text-yellow-400 leading-none">
                 {String(timeRemaining.hours).padStart(2, "0")}
               </div>
-              <div className="timer-label text-yellow-600 text-sm md:text-base mt-4">
+              <div className="timer-label text-yellow-600 text-xs md:text-base mt-4">
                 Hours
               </div>
             </div>
 
             {/* Minutes */}
             <div className="flex flex-col items-center">
-              <div className="timer-digit text-5xl md:text-7xl text-yellow-400 leading-none">
+              <div className="timer-digit text-3xl sm:text-5xl md:text-7xl text-yellow-400 leading-none">
                 {String(timeRemaining.minutes).padStart(2, "0")}
               </div>
-              <div className="timer-label text-yellow-600 text-sm md:text-base mt-4">
+              <div className="timer-label text-yellow-600 text-xs md:text-base mt-4">
                 Mins
               </div>
             </div>
 
             {/* Seconds */}
             <div className="flex flex-col items-center">
-              <div className="timer-digit text-5xl md:text-7xl text-yellow-400 leading-none">
+              <div className="timer-digit text-3xl sm:text-5xl md:text-7xl text-yellow-400 leading-none">
                 {String(timeRemaining.seconds).padStart(2, "0")}
               </div>
-              <div className="timer-label text-yellow-600 text-sm md:text-base mt-4">
+              <div className="timer-label text-yellow-600 text-xs md:text-base mt-4">
                 Secs
               </div>
             </div>

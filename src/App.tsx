@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import EHorizon from "./pages/ehorizon";
+import TestPage from "./TestPage";
 import AboutUs from "./pages/aboutus";
 import Schedule from "./pages/schedule";
 import PitchRegister from "./pages/pitch";
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<EHorizon/>} />
+        <Route path="/" element={<TestPage/>} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/register/pitch" element={<PitchRegister />} />
